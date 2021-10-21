@@ -22,11 +22,13 @@ Liste des capteurs :
 * Qualité de l'air (pm2.5)
 * Lumière (si temps) -> peu de lumiere -> c'est dangereux -> télétravail
 * Alarme pour réveiller le monsieur
-* Bouton pour arreter l'alarme
+* Bouton pour arreter l'alarme 
 
 Affichage
 * Vue synthétique de la config (app)
 * Matrice led montre l'heure
+
+=> Tout tourne sur le raspberry
 
 ## Requirements
 
