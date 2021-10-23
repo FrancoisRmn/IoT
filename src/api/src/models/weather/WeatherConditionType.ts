@@ -1,6 +1,7 @@
 export enum WeatherConditionType {
-    RAIN,
-    SNOW,
-    THUNDERSTORM,
-    DRIZZLE
+    RAIN = "Rain",
+    SNOW = "Snow",
+    THUNDERSTORM = "Thunderstorm",
+    DRIZZLE = "Drizzle",
+    CLEAR = "Clear"
 }

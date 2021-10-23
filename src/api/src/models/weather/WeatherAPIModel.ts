@@ -2,7 +2,7 @@ import { WeatherConditionType } from "./WeatherConditionType";
 
 export interface WeatherAPIModel{
     time: Date,
-    temperature: Number,
+    temperature: number,
     weatherConditionType: WeatherConditionType,
-    weatherConditionIntensity: Number
+    weatherConditionIntensity: number
 }
