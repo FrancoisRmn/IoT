@@ -7,7 +7,7 @@ import { RoutingProfile } from "../models/direction/RoutingProfile";
 let router = express.Router()
 
 router.get( "/", async ( req, res ) => {
-    res.send(await directionAPIDataAccess.getDirection(RoutingProfile.DRIVING,50.203621,4.891570,50.467388,4.871985))
+    res.send(new Date())
 } );
 
 export const mainRoute = router;

@@ -1,4 +1,4 @@
-import { DirectionAPIModel } from "../models/direction/DirectionAPIModel";
+import { RouteAPIModel } from "../models/direction/RouteAPIModel";
 import { RoutingProfile } from "../models/direction/RoutingProfile"
 require('dotenv').config();
 const mbxClient = require('@mapbox/mapbox-sdk');
@@ -19,7 +19,7 @@ class DirectionAPIDataAccess{
         lat_origin:number,
         long_origin:number,
         lat_dest:number,
-        long_dest:number): Promise<DirectionAPIModel>{
+        long_dest:number): Promise<RouteAPIModel>{
         try{
             const data = await this.directionsService.getDirections({
                 profile: profile,
