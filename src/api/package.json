@@ -7,8 +7,7 @@
     "build": "tsc",
     "prestart": "npm run build",
     "start": "node .",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "lol": "node load_interfaces.cjs"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
@@ -16,12 +15,16 @@
   "dependencies": {
     "@googlemaps/google-maps-services-js": "^3.2.6",
     "@mapbox/mapbox-sdk": "^0.13.2",
+    "@types/lodash": "^4.14.176",
     "axios": "^0.23.0",
     "dotenv": "^10.0.0",
     "es6-shim": "^0.35.6",
     "express": "^4.17.1",
     "json-schema-to-typescript": "^10.1.5",
     "json-to-ts": "^1.7.0",
+    "lodash": "^4.17.21",
+    "node-fetch": "^3.0.0",
+    "node-ical": "^0.13.0",
     "ts-node": "^10.4.0"
   },
   "devDependencies": {

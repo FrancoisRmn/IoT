@@ -6,8 +6,6 @@
  */
 
 export interface WakeUpConfig {
-  homeAdress?: string;
-  officeAdress?: string;
   localTimeZone?: string;
   noWakeUpBefore?: number;
   preferedWorkingType?: "home" | "office";
@@ -18,6 +16,7 @@ export interface WorkingConfig {
   shouldStartAt?: number;
   delay?: number;
   preparationDuration?: number;
+  address?: "string";
   configChecks?: ConfigChecks;
 }
 export interface ConfigChecks {
@@ -29,7 +28,7 @@ export interface ConfigChecks {
 export interface WeatherCheck {
   minTemp?: number;
   maxTemp?: number;
-  weatherConditions?: WeatherCondition[];
+  weatherConditionsCheck?: WeatherCondition[];
 }
 export interface WeatherCondition {
   type?: string;

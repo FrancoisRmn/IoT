@@ -13,6 +13,7 @@
                 "preparationDuration": {
                     "type": "integer"
                 },
+                "address":"string",
                 "configChecks": {
                     "type": "object",
                     "title": "ConfigChecks",
@@ -27,7 +28,7 @@
                                 "maxTemp": {
                                     "type": "integer"
                                 },
-                                "weatherConditions": {
+                                "weatherConditionsCheck": {
                                     "type": "array",
                                     "items": {
                                         "type": "object",
@@ -98,12 +99,6 @@
     "title": "WakeUpConfig",
     "type": "object",
     "properties": {
-        "homeAdress": {
-            "type": "string"
-        },
-        "officeAdress": {
-            "type": "string"
-        },
         "localTimeZone": {
             "type": "string"
         },

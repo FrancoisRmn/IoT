@@ -8,6 +8,6 @@ app.listen(process.env.PORT, () => {
     console.log(`*** Express server listening on port ${process.env.PORT} ***`);
 
     // compile from file
-    compileFromFile('WakeUpConfigSchema.json')
+    compileFromFile('src/WakeUpConfigSchema.json')
     .then(ts => fs.writeFileSync('src/models/wake-up-config/WakeUpConfigModel.d.ts', ts))
 })
