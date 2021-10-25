@@ -1,0 +1,128 @@
+{
+    "definitions": {
+        "WorkingConfig": {
+            "type": "object",
+            "title": "WorkingConfig",
+            "properties": {
+                "shouldStartAt": {
+                    "type": "integer"
+                },
+                "delay": {
+                    "type": "integer"
+                },
+                "preparationDuration": {
+                    "type": "integer"
+                },
+                "configChecks": {
+                    "type": "object",
+                    "title": "ConfigChecks",
+                    "properties": {
+                        "weatherCheck": {
+                            "type": "object",
+                            "title": "WeatherCheck",
+                            "properties": {
+                                "minTemp": {
+                                    "type": "integer"
+                                },
+                                "maxTemp": {
+                                    "type": "integer"
+                                },
+                                "weatherConditions": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "title": "WeatherCondition",
+                                        "properties": {
+                                            "type": {
+                                                "type": "string"
+                                            },
+                                            "maxIntensity": {
+                                                "type": "integer"
+                                            }
+                                        },
+                                        "additionalProperties": false
+                                    }
+                                }
+                            },
+                            "additionalProperties": false
+                        },
+                        "airPollutionCheck": {
+                            "type": "object",
+                            "title": "AirPollutionCheck",
+                            "properties": {
+                                "minAqi": {
+                                    "type": "integer"
+                                }
+                            },
+                            "additionalProperties": false
+                        },
+                        "agendaCheck": {
+                            "type": "object",
+                            "title": "AgendaCheck",
+                            "properties": {
+                                "url": {
+                                    "type": "string"
+                                }
+                            },
+                            "additionalProperties": false
+                        },
+                        "directionCheck": {
+                            "type": "object",
+                            "title": "DirectionCheck",
+                            "properties":{
+                                "car":{
+                                    "type":"boolean"
+                                },
+                                "bus":{
+                                    "type":"boolean"
+                                },
+                                "train":{
+                                    "type":"boolean"
+                                },
+                                "bike":{
+                                    "type":"boolean"
+                                },
+                                "walk":{
+                                    "type":"boolean"
+                                }
+                            },
+                            "additionalProperties": false
+                        }
+                    },
+                    "additionalProperties": false
+                }
+            },
+            "additionalProperties": false
+        }
+    },
+    "title": "WakeUpConfig",
+    "type": "object",
+    "properties": {
+        "homeAdress": {
+            "type": "string"
+        },
+        "officeAdress": {
+            "type": "string"
+        },
+        "localTimeZone": {
+            "type": "string"
+        },
+        "noWakeUpBefore":{
+            "type":"integer"
+        },
+        "preferedWorkingType": {
+            "type": "string",
+            "enum": [
+                "home",
+                "office"
+            ]
+        },
+        "officeWorkingConfig": {
+            "$ref": "#/definitions/WorkingConfig"
+        },
+        "homeWorkingConfig": {
+            "$ref": "#/definitions/WorkingConfig"
+        }
+    },
+    "additionalProperties": false
+}

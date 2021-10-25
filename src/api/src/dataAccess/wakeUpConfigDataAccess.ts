@@ -1,9 +1,10 @@
-import { WakeUpConfigModel } from "src/models/wake-up-config/WakeUpConfigModel";
+import { WakeUpConfig } from "../models/wake-up-config/WakeUpConfigModel";
+
 
 class WakeUpConfigDataAccess{
 
-    public getConfig(): WakeUpConfigModel{
-
+    public getConfig(): WakeUpConfig{
+        return
     }
 }
 
