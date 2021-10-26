@@ -1,6 +1,7 @@
 #include <WiFi101.h>
 #include <SPI.h>
 #include <Seeed_HM330X.h>     // Library use to connect the PM2.5 sensor
+#include <WebSocketsClient.h> // Library use to allow websockets
 
 // WiFi informations
 char ssid[] = "VOO-006536";   // The name of the network
@@ -18,6 +19,9 @@ const char* str[] = {"sensor num: ", "PM1.0 concentration(CF=1,Standard particul
                      "PM2.5 concentration(Atmospheric environment,unit:ug/m3): ",
                      "PM10 concentration(Atmospheric environment,unit:ug/m3): ",
                     };
+
+// Web socket informations
+WebSocketsClient webSocket;
 
 void setup() {
   // Set a delay before launching the programm to avoid crash
@@ -62,7 +66,40 @@ void setup() {
     Serial.println("HM3301 init failed !!!");
     while (true);
   }
-  
+
+  webSocket.begin("192.168.0.126", 8011);
+  webSocket.onEvent(webSocketEvent);
+
+  webSocket.loop();
+}
+
+void webSocketEvent(WStype_t type, uint8_t * payload, size_t length) {
+  switch(type){
+    case WStype_DISCONNECTED:
+      Serial.println("[WSc] Disconnected !");
+      break;
+    case WStype_CONNECTED:
+      {
+        Serial.print("[WSc] Connected to url : ");
+        Serial.println((char *)payload);
+        // Send message to server when connected
+        webSocket.sendTXT("CONNECTED");
+      }
+      break;
+    case WStype_TEXT:
+       Serial.print("[WSc] get text: ");
+       Serial.println((char *)payload);
+       // send message to server
+       // webSocket.sendTXT("message here");
+       break;
+     case WStype_BIN:
+       Serial.print("[WSc] get binary length: ");
+       Serial.println(length);
+       // hexdump(payload, length);
+       // send data to server
+       // webSocket.sendBIN(payload, length);
+       break;
+  }
 }
 
 HM330XErrorCode print_result(const char* str, uint16_t value) {
