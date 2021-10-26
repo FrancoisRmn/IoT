@@ -121,10 +121,8 @@ HM330XErrorCode parse_result(uint8_t* data) {
     }
   }
   for (int i = 0; i < 6; i++) {
-    Serial.println(pmResults[i]);
     stringResult = stringResult + String(pmResults[i]) + " ";
   }
-  Serial.println(stringResult);
   ::mqtt.publish("test/message", stringResult);
   return NO_ERROR;
 }
