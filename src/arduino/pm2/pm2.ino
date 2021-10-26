@@ -1,7 +1,6 @@
 #include <WiFi101.h>
-#include <SPI.h>
 #include <Seeed_HM330X.h>     // Library use to connect the PM2.5 sensor
-#include <WebSocketsClient.h> // Library use to allow websockets
+#include <MQTTPubSubClient.h> // Library use for MQTT Protocol
 
 // WiFi informations
 char ssid[] = "VOO-006536";   // The name of the network
@@ -20,25 +19,41 @@ const char* str[] = {"sensor num: ", "PM1.0 concentration(CF=1,Standard particul
                      "PM10 concentration(Atmospheric environment,unit:ug/m3): ",
                     };
 
-// Web socket informations
-WebSocketsClient webSocket;
+// MQTT informations
+const char* mqtt_server = "192.168.0.125"; //Adresse IP du Broker Mqtt
+const int mqtt_port = 1883;                 //port utilisé par le Broker 
+
+WiFiClient client;
+MQTTPubSubClient mqtt;
 
 void setup() {
   // Set a delay before launching the programm to avoid crash
   delay(5000);
-  
+
   /*===== Initialize the Serial connection =====*/
   // Intialize serial and wait fort port to open : 
   Serial.begin(9600);
   while (!Serial) {} // Wait for serial port to connect
 
+  setupWifi();
+
+  setupMQTT();
+
+  /*===== Connect the PM2.5 sensor =====*/
+  Serial.println("Start init sensor");
+  if (sensor.init()){
+    Serial.println("HM3301 init failed !!!");
+    while (true);
+  }
+}
+
+void setupWifi(){
+  /*===== Initialize the WiFi =====*/
   // Check for the presence of the shield :
   if (WiFi.status() == WL_NO_SHIELD) {
     Serial.println("Wifi shield not present");
     while (true);   // don't continue :
   }
-
-  /*===== Initialize the WiFi =====*/
   int count = 0;
   WiFi.config(ip);
   do {
@@ -59,47 +74,25 @@ void setup() {
     IPAddress ipaa = WiFi.localIP();
     Serial.println(ipaa);
   }
-
-  /*===== Connect the PM2.5 sensor =====*/
-  Serial.println("Start init sensor");
-  if (sensor.init()){
-    Serial.println("HM3301 init failed !!!");
-    while (true);
-  }
-
-  webSocket.begin("192.168.0.126", 8011);
-  webSocket.onEvent(webSocketEvent);
-
-  webSocket.loop();
 }
 
-void webSocketEvent(WStype_t type, uint8_t * payload, size_t length) {
-  switch(type){
-    case WStype_DISCONNECTED:
-      Serial.println("[WSc] Disconnected !");
-      break;
-    case WStype_CONNECTED:
-      {
-        Serial.print("[WSc] Connected to url : ");
-        Serial.println((char *)payload);
-        // Send message to server when connected
-        webSocket.sendTXT("CONNECTED");
-      }
-      break;
-    case WStype_TEXT:
-       Serial.print("[WSc] get text: ");
-       Serial.println((char *)payload);
-       // send message to server
-       // webSocket.sendTXT("message here");
-       break;
-     case WStype_BIN:
-       Serial.print("[WSc] get binary length: ");
-       Serial.println(length);
-       // hexdump(payload, length);
-       // send data to server
-       // webSocket.sendBIN(payload, length);
-       break;
+void setupMQTT(){
+  Serial.println("Connecting to host");
+  while (!client.connect(mqtt_server, mqtt_port)){
+    Serial.print(".");
+    delay(1000);
   }
+  Serial.println(" Host connected !");
+  
+  // Initialize MQQT client
+  ::mqtt.begin(client);
+
+  Serial.println("Connecting to MQTT broker");
+  while (!::mqtt.connect("test", "message")){
+      Serial.print(".");
+      delay(1000);
+  }
+  Serial.println(" MQTT connected !");
 }
 
 HM330XErrorCode print_result(const char* str, uint16_t value) {
@@ -113,6 +106,9 @@ HM330XErrorCode print_result(const char* str, uint16_t value) {
 
 /*parse buf with 29 uint8_t-data*/
 HM330XErrorCode parse_result(uint8_t* data) {
+  int pmResults[6];
+  String stringResult;
+
   uint16_t value = 0;
   if (NULL == data) {
     return ERROR_PARAM;
@@ -120,7 +116,16 @@ HM330XErrorCode parse_result(uint8_t* data) {
   for (int i = 1; i < 8; i++) {
     value = (uint16_t) data[i * 2] << 8 | data[i * 2 + 1];
     print_result(str[i - 1], value);
+    if(i != 1){
+      pmResults[i-2] = value;
+    }
   }
+  for (int i = 0; i < 6; i++) {
+    Serial.println(pmResults[i]);
+    stringResult = stringResult + String(pmResults[i]) + " ";
+  }
+  Serial.println(stringResult);
+  ::mqtt.publish("test/message", stringResult);
   return NO_ERROR;
 }
 
@@ -155,7 +160,8 @@ void loop() {
   }
   //parse_result_value(buf);
   parse_result(buf);
-  Serial.println("");
- 
 
+  //::mqtt.publish("test/message", "hello world");
+  Serial.println("");
+  
 }
