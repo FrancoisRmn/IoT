@@ -1,6 +1,6 @@
 import express from "express";
 import "es6-shim";
-import { mainRoute } from "./routes/mainRoute";
+import {wakeUpRoute } from "./routes/wakeUpRoute";
 
 class App {
 
@@ -23,7 +23,7 @@ class App {
     }
 
     private configRoutes():void{
-        this.app.use('/main',mainRoute);
+        this.app.use('/main',wakeUpRoute);
     }
 
 }

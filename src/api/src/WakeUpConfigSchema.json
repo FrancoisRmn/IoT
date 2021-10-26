@@ -1,5 +1,102 @@
 {
     "definitions": {
+        "WeatherCheck":{
+            "type":"object",
+            "title":"WeatherCheck",
+            "properties": {
+                "minTemp": {
+                    "type": "integer"
+                },
+                "maxTemp": {
+                    "type": "integer"
+                },
+                "weatherConditionsCheck": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "title": "WeatherCondition",
+                        "properties": {
+                            "type": {
+                                "type": "string"
+                            },
+                            "maxIntensity": {
+                                "type": "integer"
+                            }
+                        },
+                        "additionalProperties": false
+                    }
+                }
+            },
+            "additionalProperties": false
+        },
+        "AirPollutionCheck": {
+            "type": "object",
+            "title": "AirPollutionCheck",
+            "properties": {
+                "minAqi": {
+                    "type": "integer"
+                }
+            },
+            "additionalProperties": false
+        },
+        "AgendaCheck": {
+            "type": "object",
+            "title": "AgendaCheck",
+            "properties": {
+                "url": {
+                    "type": "string"
+                }
+            },
+            "additionalProperties": false
+        },
+        "DirectionCheck": {
+            "type": "object",
+            "title": "DirectionCheck",
+            "properties":{
+                "car":{
+                    "type":"boolean"
+                },
+                "bus":{
+                    "type":"boolean"
+                },
+                "train":{
+                    "type":"boolean"
+                },
+                "bike":{
+                    "type":"boolean"
+                },
+                "walk":{
+                    "type":"boolean"
+                }
+            },
+            "additionalProperties": false
+        },
+        "OfficeWorkingConfigCheck":{
+            "type": "object",
+            "title": "OfficeWorkingConfigCheck",
+            "properties":{
+                "weatherCheck":{
+                    "$ref": "#/definitions/WeatherCheck"
+                },
+                "airPollutionCheck":{
+                    "$ref": "#/definitions/AirPollutionCheck"
+                },
+                "directionCheck":{
+                    "$ref": "#/definitions/DirectionCheck"
+                }
+            },
+            "additionalProperties": false
+        },
+        "HomeWorkingConfigCheck":{
+            "type": "object",
+            "title": "HomeWorkingConfigCheck",
+            "properties":{
+                "agendaCheck":{
+                    "$ref": "#/definitions/AgendaCheck"
+                }
+            },
+            "additionalProperties": false
+        },
         "WorkingConfig": {
             "type": "object",
             "title": "WorkingConfig",
@@ -13,88 +110,14 @@
                 "preparationDuration": {
                     "type": "integer"
                 },
-                "address":"string",
-                "configChecks": {
-                    "type": "object",
-                    "title": "ConfigChecks",
-                    "properties": {
-                        "weatherCheck": {
-                            "type": "object",
-                            "title": "WeatherCheck",
-                            "properties": {
-                                "minTemp": {
-                                    "type": "integer"
-                                },
-                                "maxTemp": {
-                                    "type": "integer"
-                                },
-                                "weatherConditionsCheck": {
-                                    "type": "array",
-                                    "items": {
-                                        "type": "object",
-                                        "title": "WeatherCondition",
-                                        "properties": {
-                                            "type": {
-                                                "type": "string"
-                                            },
-                                            "maxIntensity": {
-                                                "type": "integer"
-                                            }
-                                        },
-                                        "additionalProperties": false
-                                    }
-                                }
-                            },
-                            "additionalProperties": false
-                        },
-                        "airPollutionCheck": {
-                            "type": "object",
-                            "title": "AirPollutionCheck",
-                            "properties": {
-                                "minAqi": {
-                                    "type": "integer"
-                                }
-                            },
-                            "additionalProperties": false
-                        },
-                        "agendaCheck": {
-                            "type": "object",
-                            "title": "AgendaCheck",
-                            "properties": {
-                                "url": {
-                                    "type": "string"
-                                }
-                            },
-                            "additionalProperties": false
-                        },
-                        "directionCheck": {
-                            "type": "object",
-                            "title": "DirectionCheck",
-                            "properties":{
-                                "car":{
-                                    "type":"boolean"
-                                },
-                                "bus":{
-                                    "type":"boolean"
-                                },
-                                "train":{
-                                    "type":"boolean"
-                                },
-                                "bike":{
-                                    "type":"boolean"
-                                },
-                                "walk":{
-                                    "type":"boolean"
-                                }
-                            },
-                            "additionalProperties": false
-                        }
-                    },
-                    "additionalProperties": false
+                "address":{
+                    "type":"string"
                 }
             },
             "additionalProperties": false
         }
+
+
     },
     "title": "WakeUpConfig",
     "type": "object",
@@ -113,10 +136,30 @@
             ]
         },
         "officeWorkingConfig": {
-            "$ref": "#/definitions/WorkingConfig"
+            "type":"object",
+            "title": "OfficeWorkingConfig",
+            "properties":{
+                "workingConfig":{
+                    "$ref": "#/definitions/WorkingConfig"
+                },
+                "check":{
+                    "$ref": "#/definitions/OfficeWorkingConfigCheck"
+                }
+            },
+            "additionalProperties": false
         },
         "homeWorkingConfig": {
-            "$ref": "#/definitions/WorkingConfig"
+            "type":"object",
+            "title": "HomeWorkingConfig",
+            "properties":{
+                "workingConfig":{
+                    "$ref": "#/definitions/WorkingConfig"
+                },
+                "check":{
+                    "$ref": "#/definitions/HomeWorkingConfigCheck"
+                }
+            },
+            "additionalProperties": false
         }
     },
     "additionalProperties": false
