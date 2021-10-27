@@ -33,7 +33,8 @@ void setup() {
   /*===== Initialize the Serial connection =====*/
   // Intialize serial and wait fort port to open : 
   Serial.begin(9600);
-  while (!Serial) {} // Wait for serial port to connect
+  //while (!Serial) {} // Wait for serial port to connect
+  // If this, the arduino will wait the monitoring before starting
 
   setupWifi();
 
