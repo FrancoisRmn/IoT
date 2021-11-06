@@ -18,6 +18,11 @@ export interface WorkingConfig {
   delay?: number;
   preparationDuration?: number;
   address?: string;
+  position?: Position
+}
+export interface Position{
+  lat?: number,
+  lon?: number
 }
 export interface WeatherCheck {
   minTemp?: number;

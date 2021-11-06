@@ -1,4 +1,4 @@
-import { DirectionAPIModel } from "./DirectionAPIModel";
+import { DirectionModel } from "./DirectionAPIModel";
 
-export interface RouteAPIModel extends DirectionAPIModel{
+export interface RouteModel extends DirectionModel{
 }

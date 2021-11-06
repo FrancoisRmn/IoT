@@ -25,6 +25,7 @@
     "json-to-ts": "^1.7.0",
     "lodash": "^4.17.21",
     "moment": "^2.29.1",
+    "nearest-date": "^1.0.1",
     "node-fetch": "^3.0.0",
     "node-ical": "^0.13.0",
     "ts-node": "^10.4.0"

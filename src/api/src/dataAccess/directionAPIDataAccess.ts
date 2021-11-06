@@ -1,5 +1,5 @@
 import { directionClient } from "../middlewares/directionClient";
-import { RouteAPIModel } from "../models/direction/RouteAPIModel";
+import { RouteModel } from "../models/direction/RouteAPIModel";
 import { RoutingProfile } from "../models/direction/RoutingProfile"
 require('dotenv').config();
 
@@ -12,7 +12,7 @@ class DirectionAPIDataAccess{
         latDest:number,
         lonDest:number,
         profile?: RoutingProfile,
-        ): Promise<RouteAPIModel>{
+        ): Promise<RouteModel>{
         try{
             const data = (await directionClient.directions({
                 params:{
@@ -30,7 +30,8 @@ class DirectionAPIDataAccess{
             })).data
 
             return {
-                departureTime: data.routes[0].legs[0].departure_time.value.getTime()
+                departureTime: data.routes[0].legs[0].departure_time.value.getTime(),
+                arrivalTime: data.routes[0].legs[0].arrival_time.value.getTime()
             }
 
         }catch(err){

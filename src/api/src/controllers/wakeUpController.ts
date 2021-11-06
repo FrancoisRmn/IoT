@@ -8,6 +8,11 @@ import { AgendaCheckException } from "../models/exceptions/AgendaCheckException"
 import { CheckException } from "../models/exceptions/CheckException";
 import moment from "moment";
 import { configDataAccess } from "../dataAccess/configDataAccess";
+import { airPollutionAPIDataAccess } from "../dataAccess/airPollutionAPIDataAccess";
+import { SystemException } from "../models/exceptions/SystemException";
+import { airPollutionSensorDataAccess } from "../dataAccess/airPollutionSensorDataAccess";
+import { DirectionModel } from "../models/direction/DirectionAPIModel";
+const nearest = require('nearest-date')
 
 class WakeUpController {
     private readonly TEMP_URL = "https://ade.unamur.be/jsp/custom/modules/plannings/anonymous_cal.jsp?resources=1959&projectId=1&calType=ical&nbWeeks=52&displayConfigId=8"
@@ -30,12 +35,25 @@ class WakeUpController {
                 }
             }
         } else {
+            const direction = await this.getDirectionModel(config);
+            const wuTime = await this.calcWakeUpTimeOfficeWorking(direction.departureTime,config);
+
+
             if (config.officeWorkingConfig.airPollutionCheck) {
-                //todo
+                const currentOfficeAirPollution = await airPollutionAPIDataAccess.getAirPollutionHourly(config.homeWorkingConfig.position.lat,config.homeWorkingConfig.position.lon)
+                const index = nearest(currentOfficeAirPollution.map(a => a.time), new Date(direction.arrivalTime))
+                const nearestAirPollution = currentOfficeAirPollution[index]
+                if(nearestAirPollution.aqi < config.officeWorkingConfig.airPollutionCheck.minAqi){
+                    return new Date(this.calcWakeUpTimeHomeWorking(config.homeWorkingConfig))
+                }
+
+                const currentHomeAirPollution = await airPollutionSensorDataAccess.getCurrentAirPollution()
+                if(currentHomeAirPollution.aqi < config.officeWorkingConfig.airPollutionCheck.minAqi){
+                    return new Date(this.calcWakeUpTimeHomeWorking(config.homeWorkingConfig))
+                }
             }
     
             if (config.officeWorkingConfig.weatherCheck) {
-                //todo
             }
     
             if (config.officeWorkingConfig.directionCheck) {
@@ -45,6 +63,12 @@ class WakeUpController {
     }
 
     public saveConfig(c: WakeUpConfig): WakeUpConfig{
+        const officeAdressGeocoded = await geocodingDataAccess.geocode1(c.officeWorkingConfig.address)
+        const homeAdressGeocoded = await geocodingDataAccess.geocode2(c.homeWorkingConfig.address)
+        c.homeWorkingConfig.position.lat = homeAdressGeocoded[0]
+        c.homeWorkingConfig.position.lon = homeAdressGeocoded[1]
+        c.officeWorkingConfig.position.lat = officeAdressGeocoded[0]
+        c.officeWorkingConfig.position.lon = officeAdressGeocoded[1]
         return configDataAccess.save(c);
     }
 
@@ -52,19 +76,21 @@ class WakeUpController {
         return configDataAccess.get();
     }
 
-    private async getDirectionDepartureTime(config: WakeUpConfig): Promise<number> {
+    private async getDirectionModel(config: WakeUpConfig): Promise<DirectionModel> {
 
-        const officeAdressGeocoded = await geocodingDataAccess.geocode1(config.officeWorkingConfig.address)
-        const homeAdressGeocoded = await geocodingDataAccess.geocode2(config.homeWorkingConfig.address)
+        if((!config.homeWorkingConfig.position) || (!config.officeWorkingConfig.position)){
+            throw new SystemException()
+        }
+
         const directionModel = await directionAPIDataAccess.getDirection(
             config.officeWorkingConfig.shouldStartAt,
-            homeAdressGeocoded[0],
-            homeAdressGeocoded[1],
-            officeAdressGeocoded[0],
-            officeAdressGeocoded[1],
+            config.homeWorkingConfig.position.lat,
+            config.homeWorkingConfig.position.lon,
+            config.officeWorkingConfig.position.lat,
+            config.officeWorkingConfig.position.lon
         )
 
-        return directionModel.departureTime;
+        return (directionModel.departureTime, directionModel.);
     }
 
     private calcWakeUpTimeHomeWorking(config: HomeWorkingConfig): number {
@@ -75,8 +101,7 @@ class WakeUpController {
             .unix()
     }
 
-    private async calcWakeUpTimeOfficeWorking(config: WakeUpConfig): Promise<number>{
-        const dpTime = await this.getDirectionDepartureTime(config);
+    private async calcWakeUpTimeOfficeWorking(dpTime: number, config: WakeUpConfig): Promise<number>{
         return moment()
         .startOf('date')
         .seconds(config.officeWorkingConfig.shouldStartAt)
