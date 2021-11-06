@@ -12,6 +12,7 @@ import { airPollutionAPIDataAccess } from "../dataAccess/airPollutionAPIDataAcce
 import { SystemException } from "../models/exceptions/SystemException";
 import { airPollutionSensorDataAccess } from "../dataAccess/airPollutionSensorDataAccess";
 import { DirectionModel } from "../models/direction/DirectionAPIModel";
+import { weatherAPIDataAccess } from "../dataAccess/weatherAPIDataAccess";
 const nearest = require('nearest-date')
 
 class WakeUpController {
@@ -38,9 +39,8 @@ class WakeUpController {
             const direction = await this.getDirectionModel(config);
             const wuTime = await this.calcWakeUpTimeOfficeWorking(direction.departureTime,config);
 
-
             if (config.officeWorkingConfig.airPollutionCheck) {
-                const currentOfficeAirPollution = await airPollutionAPIDataAccess.getAirPollutionHourly(config.homeWorkingConfig.position.lat,config.homeWorkingConfig.position.lon)
+                const currentOfficeAirPollution = await airPollutionAPIDataAccess.getAirPollutionHourly(config.officeWorkingConfig.position.lat,config.officeWorkingConfig.position.lon)
                 const index = nearest(currentOfficeAirPollution.map(a => a.time), new Date(direction.arrivalTime))
                 const nearestAirPollution = currentOfficeAirPollution[index]
                 if(nearestAirPollution.aqi < config.officeWorkingConfig.airPollutionCheck.minAqi){
@@ -54,6 +54,19 @@ class WakeUpController {
             }
     
             if (config.officeWorkingConfig.weatherCheck) {
+                const currentOfficeWeather = await weatherAPIDataAccess.getWeatherHourly(config.officeWorkingConfig.position.lat, config.officeWorkingConfig.position.lon)
+                const indexOffice = nearest(currentOfficeWeather.map(c => c.time), new Date(direction.arrivalTime))
+                const nearestOfficeWeather = currentOfficeWeather[indexOffice]
+                if((nearestOfficeWeather.temperature < config.officeWorkingConfig.weatherCheck.minTemp)||(nearestOfficeWeather.temperature > config.officeWorkingConfig.weatherCheck.maxTemp)){
+                    return new Date(this.calcWakeUpTimeHomeWorking(config.homeWorkingConfig))
+                }
+
+                const currentHomeWeather = await weatherAPIDataAccess.getWeatherHourly(config.homeWorkingConfig.position.lat, config.homeWorkingConfig.position.lon)
+                const indexHome = nearest(currentHomeWeather.map(c => c.time), new Date(direction.departureTime))
+                const nearestHomeWeather = currentHomeWeather[indexHome]
+                if((nearestHomeWeather.temperature < config.officeWorkingConfig.weatherCheck.minTemp)||(nearestHomeWeather.temperature > config.officeWorkingConfig.weatherCheck.maxTemp)){
+                    return new Date(this.calcWakeUpTimeHomeWorking(config.homeWorkingConfig))
+                }
             }
     
             if (config.officeWorkingConfig.directionCheck) {
