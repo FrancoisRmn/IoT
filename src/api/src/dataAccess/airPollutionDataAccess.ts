@@ -2,7 +2,7 @@ import axios from "axios";
 import { AirPollutionModel } from "../models/air-pollution/AirPollutionModel";
 import { SystemException } from "../models/exceptions/SystemException";
 
-class AirPollutionAPIDataAccess{
+class AirPollutionDataAccess{
 
     private readonly BASE_URL = "http://api.openweathermap.org/data/2.5/air_pollution/forecast"
 
@@ -19,6 +19,11 @@ class AirPollutionAPIDataAccess{
         }
     }
 
+    public async getHomeAirPollution(): Promise<AirPollutionModel>{
+        //todo
+        return
+    }
+
 }
 
-export const airPollutionAPIDataAccess = new AirPollutionAPIDataAccess
+export const airPollutionDataAccess = new AirPollutionDataAccess

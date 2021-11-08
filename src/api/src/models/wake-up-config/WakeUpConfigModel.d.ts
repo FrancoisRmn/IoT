@@ -1,3 +1,5 @@
+import { RoutingProfile } from "../direction/RoutingProfile";
+
 export interface WakeUpConfig {
   localTimeZone?: string;
   noWakeUpBefore?: number;
@@ -37,11 +39,7 @@ export interface AirPollutionCheck {
   minAqi?: number;
 }
 export interface DirectionCheck {
-  car?: boolean;
-  bus?: boolean;
-  train?: boolean;
-  bike?: boolean;
-  walk?: boolean;
+  mode: RoutingProfile
 }
 export interface AgendaCheck {
   url?: string;

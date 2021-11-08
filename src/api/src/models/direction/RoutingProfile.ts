@@ -1,5 +1,6 @@
 export enum RoutingProfile{
-    DRIVING = "driving-traffic",
+    DRIVING = "driving",
     WALKING = "walking",
-    CYCLING = "cycling"
+    CYCLING = "bicycling",
+    TRANSIT = "transit"
 }

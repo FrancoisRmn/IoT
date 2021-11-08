@@ -2,7 +2,7 @@ import axios from "axios"
 import { kelvinToCelsius } from "../utils/weatherUtils"
 import { WeatherAPIModel } from "../models/weather/WeatherAPIModel"
 
-class WeatherAPIDataAccess{
+class WeatherDataAccess{
 
     private readonly BASE_URL = "https://api.openweathermap.org/data/2.5/onecall"
 
@@ -21,4 +21,4 @@ class WeatherAPIDataAccess{
     }
 }
 
-export const weatherAPIDataAccess = new WeatherAPIDataAccess
+export const weatherDataAccess = new WeatherDataAccess

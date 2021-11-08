@@ -1,7 +1,6 @@
 import express from "express";
 import "es6-shim";
 import {wakeUpRoute } from "./routes/wakeUpRoute";
-
 class App {
 
     public app: express.Application;
@@ -20,10 +19,12 @@ class App {
             );
             next();
           });
+        this.app.use(express.urlencoded({ extended: false }));
+        this.app.use(express.json());
     }
 
     private configRoutes():void{
-        this.app.use('/main',wakeUpRoute);
+        this.app.use('/wakeup',wakeUpRoute);
     }
 
 }

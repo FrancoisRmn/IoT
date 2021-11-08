@@ -2,10 +2,13 @@ import { WakeUpConfig } from "../models/wake-up-config/WakeUpConfigModel";
 import * as fs from "fs"
 import { SaveConfigException } from "../models/exceptions/SaveConfigException";
 import { GetConfigException } from "../models/exceptions/GetConfigException";
+import {promisify} from "util"
+import { SystemException } from "../models/exceptions/SystemException";
+import * as path from "path"
 
 class ConfigDataAccess{
 
-    private readonly FILE_NAME = "wakeupconfig.json"
+    private readonly FILE_NAME = "../wakeupconfig.json"
     private readonly FORMAT = "utf8"
 
     public save(config: WakeUpConfig): WakeUpConfig{
@@ -17,13 +20,14 @@ class ConfigDataAccess{
         return data;
     }
 
-    public get(): WakeUpConfig{
-        let data;
-        fs.readFile(this.FILE_NAME, this.FORMAT, (err, data) => {
-            if(err) throw new GetConfigException(err.message)
-            data = JSON.parse(data);
-        });
-        return data;
+    public async get(): Promise<WakeUpConfig>{
+        const readFile = promisify(fs.readFile);
+        try{
+            const data = await readFile(this.FILE_NAME, this.FORMAT)
+            return JSON.parse(data);
+        } catch(err){
+            throw new SystemException(err)
+        }
     }
 }
 

@@ -1,15 +1,8 @@
 import * as express from "express"
-import { directionAPIDataAccess } from "../dataAccess/directionAPIDataAccess";
-import { airPollutionAPIDataAccess } from "../dataAccess/airPollutionAPIDataAccess";
-import { weatherAPIDataAccess } from "../dataAccess/weatherAPIDataAccess";
-import { RoutingProfile } from "../models/direction/RoutingProfile";
 import { wakeupController } from "../controllers/wakeUpController";
-import {
-    ReasonPhrases,
-    StatusCodes,
-    getReasonPhrase,
-    getStatusCode,
-} from 'http-status-codes';
+import { handleError } from "../middlewares/handleError";
+import { ok } from "../middlewares/ok";
+import { created } from "../middlewares/created";
 
 let router = express.Router()
 
@@ -20,17 +13,22 @@ router.get( "/", async ( req, res ) => {
 
 router.post( "/config", async ( req, res ) => {
     const config = req.body;
-    wakeupController.saveConfig(config);
-    res
-        .status(StatusCodes.CREATED)
-        .send()
+    console.log(req.body)
+    try{
+        const conf = await wakeupController.saveConfig(config);
+        created(res, conf)
+    }catch(err){
+        handleError(err,res)
+    }
 } );
 
 router.get( "/config", async ( req, res ) => {
-    const conf = wakeupController.getConfig();
-    res
-        .status(StatusCodes.OK)
-        .send(conf)
+    try{
+        const conf = await wakeupController.getConfig();
+        ok(res, conf)
+    } catch(err){
+        handleError(err,res)
+    }
 } );
 
 export const wakeUpRoute = router;

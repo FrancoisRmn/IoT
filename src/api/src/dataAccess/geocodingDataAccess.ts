@@ -1,13 +1,31 @@
-class GeocodingDataAccess{
+import { AddressGeometry } from "@googlemaps/google-maps-services-js";
+import { mapsClient } from "../middlewares/mapsClient"
+import { SystemException } from "../models/exceptions/SystemException";
+import { Position } from "../models/wake-up-config/WakeUpConfigModel";
+require('dotenv').config();
 
-    //todo
+class GeocodingDataAccess{
     
-    public async geocode1(adress: string): Promise<[number,number]>{
-        return [50.466300,4.858030]
+    public async geocode(address: string): Promise<Position>{
+        const data = (await mapsClient.geocode({
+            params :{
+                address : address,
+                key: process.env.DIRECTION_API_KEY
+            },
+            
+        })).data
+        if(data.status !== "OK"){
+            throw new SystemException()
+        }
+        return this.mapGeometryToPosition(data.results[0].geometry)
+
     }
 
-    public async geocode2(adress: string): Promise<[number,number]>{
-        return [50.203490,4.889030]
+    private mapGeometryToPosition(g: AddressGeometry): Position{
+        return {
+            lat: g.location.lat,
+            lon: g.location.lng
+        }
     }
 }
 
