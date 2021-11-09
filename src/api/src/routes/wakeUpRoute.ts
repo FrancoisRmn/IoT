@@ -13,7 +13,6 @@ router.get( "/", async ( req, res ) => {
 
 router.post( "/config", async ( req, res ) => {
     const config = req.body;
-    console.log(req.body)
     try{
         const conf = await wakeupController.saveConfig(config);
         created(res, conf)

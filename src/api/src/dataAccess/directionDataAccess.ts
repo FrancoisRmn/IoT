@@ -28,7 +28,7 @@ class DirectionDataAccess{
                     },
                     arrival_time: arrivalTime,
                     mode: this.mapRoutingProfileToTransitMode(profile),
-                    key: process.env.DIRECTION_API_KEY
+                    key: process.env.GOOGLE_API_KEY
                 }
             })).data
 

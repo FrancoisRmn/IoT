@@ -11,13 +11,14 @@ class ConfigDataAccess{
     private readonly FILE_NAME = "../wakeupconfig.json"
     private readonly FORMAT = "utf8"
 
-    public save(config: WakeUpConfig): WakeUpConfig{
-        let data;
-        fs.writeFile(this.FILE_NAME, JSON.stringify(config), this.FORMAT, (err)=> {
-            if(err) throw new SaveConfigException(err.message)
-            data = this.get();
-        });
-        return data;
+    public async save(config: WakeUpConfig): Promise<WakeUpConfig>{
+        const writeFile = promisify(fs.writeFile);
+        try{
+            await writeFile(this.FILE_NAME, JSON.stringify(config), this.FORMAT)
+            return this.get()
+        }catch(err){
+            throw new SystemException(err)
+        }
     }
 
     public async get(): Promise<WakeUpConfig>{

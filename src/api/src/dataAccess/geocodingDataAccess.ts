@@ -10,7 +10,7 @@ class GeocodingDataAccess{
         const data = (await mapsClient.geocode({
             params :{
                 address : address,
-                key: process.env.DIRECTION_API_KEY
+                key: process.env.GOOGLE_API_KEY
             },
             
         })).data
