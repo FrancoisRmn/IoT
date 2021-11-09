@@ -9,28 +9,32 @@ import { airPollutionDataAccess } from "../dataAccess/airPollutionDataAccess";
 import { SystemException } from "../models/exceptions/SystemException";
 import { DirectionModel } from "../models/direction/DirectionModel";
 import { weatherDataAccess } from "../dataAccess/weatherDataAccess";
+import { WakeUpModel } from "../models/wakeup/WakeUpModel";
+import { AgendaWakeUpReason } from "../models/wakeup/AgendaWakeUpReason";
+import { TooEarlyWakeUpReason } from "../models/wakeup/TooEarlyWakeUpReason";
+import { AirPollutionWakeUpReason } from "../models/wakeup/AirPollutionWakeUpReason";
+import { WeatherTemperatureWakeUpReason } from "../models/wakeup/WeatherTemperatureWakeUpReason";
 const nearest = require('nearest-date')
 
 class WakeUpController {
-    private readonly TEMP_URL = "https://ade.unamur.be/jsp/custom/modules/plannings/anonymous_cal.jsp?resources=1959&projectId=1&calType=ical&nbWeeks=52&displayConfigId=8"
 
-    public async getWakeUpTime(): Promise<number> {
+    public async getWakeUp(): Promise<WakeUpModel> {
 
         const config = await configDataAccess.get();
         const direction = await this.getDirectionModel(config);
-        const wuTime = await this.calcWakeUpTimeOfficeWorking(direction.departureTime,config);
-
+        const wuTimeOffice = await this.calcWakeUpTimeOfficeWorking(direction.departureTime,config);
         if (config.preferHomeWorking) {
             if (config.homeWorkingConfig.agendaCheck) {
                 const events = await agendaDataAccess.getEvents(new URL(config.homeWorkingConfig.agendaCheck.url));
                 const eventFound = events.find(e => e.location === config.officeWorkingConfig.address)
                 if (eventFound) {
-                    return this.calcWakeUpTimeOfficeWorking(direction.departureTime,config);
+                    return new WakeUpModel(wuTimeOffice, new AgendaWakeUpReason(config.homeWorkingConfig.agendaCheck, eventFound))
                 }
             }
         } else {
-            if(wuTime < config.noWakeUpBefore){
-                return this.calcWakeUpTimeHomeWorking(config.homeWorkingConfig)
+            if(wuTimeOffice < config.officeWorkingConfig.directionCheck.noWakeUpBefore){
+                const wuTimeHome = this.calcWakeUpTimeHomeWorking(config.homeWorkingConfig)
+                return new WakeUpModel(wuTimeHome, new TooEarlyWakeUpReason(config.officeWorkingConfig.directionCheck, direction))
             }
 
             if (config.officeWorkingConfig.airPollutionCheck) {
@@ -38,12 +42,14 @@ class WakeUpController {
                 const index = nearest(currentOfficeAirPollution.map(a => a.time), new Date(direction.arrivalTime))
                 const nearestAirPollution = currentOfficeAirPollution[index]
                 if(nearestAirPollution.aqi < config.officeWorkingConfig.airPollutionCheck.minAqi){
-                    return this.calcWakeUpTimeHomeWorking(config.homeWorkingConfig)
+                    const wuTimeHome = this.calcWakeUpTimeHomeWorking(config.homeWorkingConfig)
+                    return new WakeUpModel(wuTimeHome, new AirPollutionWakeUpReason(config.officeWorkingConfig.airPollutionCheck, nearestAirPollution))
                 }
 
                 const currentHomeAirPollution = await airPollutionDataAccess.getHomeAirPollution()
                 if(currentHomeAirPollution.aqi < config.officeWorkingConfig.airPollutionCheck.minAqi){
-                    return this.calcWakeUpTimeHomeWorking(config.homeWorkingConfig)
+                    const wuTimeHome = this.calcWakeUpTimeHomeWorking(config.homeWorkingConfig)
+                    return new WakeUpModel(wuTimeHome, new AirPollutionWakeUpReason(config.officeWorkingConfig.airPollutionCheck, currentHomeAirPollution))
                 }
             }
     
@@ -52,7 +58,8 @@ class WakeUpController {
                 const indexOffice = nearest(currentOfficeWeather.map(c => c.time), new Date(direction.arrivalTime))
                 const nearestOfficeWeather = currentOfficeWeather[indexOffice]
                 if((nearestOfficeWeather.temperature < config.officeWorkingConfig.weatherCheck.minTemp)||(nearestOfficeWeather.temperature > config.officeWorkingConfig.weatherCheck.maxTemp)){
-                    return this.calcWakeUpTimeHomeWorking(config.homeWorkingConfig)
+                    const wuTimeHome = this.calcWakeUpTimeHomeWorking(config.homeWorkingConfig)
+                    return new WakeUpModel(wuTimeHome, new WeatherTemperatureWakeUpReason(config.officeWorkingConfig.weatherCheck,nearestOfficeWeather))
                 }
 
                 const currentHomeWeather = await weatherDataAccess.getWeatherHourly(config.homeWorkingConfig.position.lat, config.homeWorkingConfig.position.lon)

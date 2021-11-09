@@ -1,8 +1,8 @@
 import * as express from "express"
-import { wakeupController } from "../controllers/wakeUpController";
 import { handleError } from "../middlewares/handleError";
 import { ok } from "../middlewares/ok";
 import { created } from "../middlewares/created";
+import { wakeupController } from "../controllers/wakeUpController";
 
 let router = express.Router()
 

@@ -1,11 +1,11 @@
 import { WeatherCheck } from "../wake-up-config/WakeUpConfigModel";
-import { Weather } from "../weather/Weather";
+import { WeatherModel } from "../weather/WeatherModel";
 import { CheckException } from "./CheckException";
 
 export class ConfigCheckException extends CheckException{
 
 
-    constructor(private readonly check: WeatherCheck, private readonly weather: Weather){
+    constructor(private readonly check: WeatherCheck, private readonly weather: WeatherModel){
         super();
     }
 }

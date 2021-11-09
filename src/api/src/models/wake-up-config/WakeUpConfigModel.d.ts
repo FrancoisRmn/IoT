@@ -1,8 +1,9 @@
 import { RoutingProfile } from "../direction/RoutingProfile";
 
+export interface Check{}
+
 export interface WakeUpConfig {
   localTimeZone?: string;
-  noWakeUpBefore?: number;
   preferHomeWorking?: boolean;
   officeWorkingConfig?: OfficeWorkingConfig;
   homeWorkingConfig?: HomeWorkingConfig;
@@ -26,7 +27,7 @@ export interface Position{
   lat?: number,
   lon?: number
 }
-export interface WeatherCheck {
+export interface WeatherCheck extends Check {
   minTemp?: number;
   maxTemp?: number;
   weatherConditionsCheck?: WeatherCondition[];
@@ -35,12 +36,13 @@ export interface WeatherCondition {
   type?: string;
   maxIntensity?: number;
 }
-export interface AirPollutionCheck {
+export interface AirPollutionCheck extends Check {
   minAqi?: number;
 }
-export interface DirectionCheck {
+export interface DirectionCheck extends Check {
+  noWakeUpBefore: number
   mode: RoutingProfile
 }
-export interface AgendaCheck {
+export interface AgendaCheck extends Check {
   url?: string;
 }
