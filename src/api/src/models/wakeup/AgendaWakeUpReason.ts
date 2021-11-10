@@ -1,13 +1,14 @@
 import { AgendaEventModel } from "../agenda/AgendaEventModel";
-import { AgendaCheck } from "../wake-up-config/WakeUpConfigModel";
-import { WakeUpReason } from "./WakeUpReason";
+import { AgendaCheck, WorkingConfig } from "../wake-up-config/WakeUpConfigModel";
+import { ViolatedCheckWakeUpReason } from "./ViolatedCheckWakeUpReason";
 
-export class AgendaWakeUpReason extends WakeUpReason{
+export class AgendaWakeUpReason extends ViolatedCheckWakeUpReason{
 
     constructor(
-        violatedCheck?: AgendaCheck,
-        currentData?: AgendaEventModel){
-            super(violatedCheck,currentData)
+        config: WorkingConfig,
+        violatedCheck: AgendaCheck,
+        currentData: AgendaEventModel){
+            super(config,violatedCheck,currentData)
         }
 
     public get reasonText():string{

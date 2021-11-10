@@ -1,13 +1,14 @@
 import { AirPollutionModel } from "../air-pollution/AirPollutionModel";
-import { AirPollutionCheck } from "../wake-up-config/WakeUpConfigModel";
-import { WakeUpReason } from "./WakeUpReason";
+import { AirPollutionCheck, WorkingConfig } from "../wake-up-config/WakeUpConfigModel";
+import { ViolatedCheckWakeUpReason } from "./ViolatedCheckWakeUpReason";
 
-export class AirPollutionWakeUpReason extends WakeUpReason{
+export class AirPollutionWakeUpReason extends ViolatedCheckWakeUpReason{
 
     constructor(
-        violatedCheck?: AirPollutionCheck,
-        currentData?: AirPollutionModel){
-            super(violatedCheck,currentData)
+        config: WorkingConfig,
+        violatedCheck: AirPollutionCheck,
+        currentData: AirPollutionModel){
+            super(config,violatedCheck,currentData)
         }
 
     public get reasonText():string{

@@ -1,13 +1,14 @@
 import { DirectionModel } from "../direction/DirectionModel";
-import { DirectionCheck } from "../wake-up-config/WakeUpConfigModel";
-import { WakeUpReason } from "./WakeUpReason";
+import { DirectionCheck, WorkingConfig } from "../wake-up-config/WakeUpConfigModel";
+import { ViolatedCheckWakeUpReason } from "./ViolatedCheckWakeUpReason";
 
-export class TooEarlyWakeUpReason extends WakeUpReason{
+export class TooEarlyWakeUpReason extends ViolatedCheckWakeUpReason{
 
     constructor(
-        violatedCheck?: DirectionCheck,
-        currentData?: DirectionModel){
-            super(violatedCheck,currentData)
+        config: WorkingConfig,
+        violatedCheck: DirectionCheck,
+        currentData: DirectionModel){
+            super(config,violatedCheck,currentData)
         }
 
     public get reasonText(): string{
