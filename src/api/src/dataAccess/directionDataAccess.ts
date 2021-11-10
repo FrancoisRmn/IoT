@@ -31,10 +31,11 @@ class DirectionDataAccess{
                     key: process.env.GOOGLE_API_KEY
                 }
             })).data
+            
+            console.log(data.routes[0].legs[0])
 
             return {
-                departureTime: data.routes[0].legs[0].departure_time.value.getTime(),
-                arrivalTime: data.routes[0].legs[0].arrival_time.value.getTime()
+                departureTime: arrivalTime - (data.routes[0].legs[0].duration.value)
             }
 
         }catch(err){

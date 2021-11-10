@@ -3,12 +3,20 @@ import { handleError } from "../middlewares/handleError";
 import { ok } from "../middlewares/ok";
 import { created } from "../middlewares/created";
 import { wakeupController } from "../controllers/wakeUpController";
+import { WakeUpDAO } from "../models/DAO/WakeUpDAO";
 
 let router = express.Router()
 
 router.get( "/", async ( req, res ) => {
-    await wakeupController.getWakeUpTime()
-    res.send(new Date())
+    try{
+        const wakeUp = await wakeupController.getWakeUp()
+        ok(res, <WakeUpDAO>{
+            time: wakeUp.time,
+            reason: wakeUp.reason.reasonText
+        })
+    }catch(err){
+        handleError(err,res)
+    }
 } );
 
 router.post( "/config", async ( req, res ) => {
