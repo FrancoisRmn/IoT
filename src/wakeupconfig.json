@@ -10,6 +10,14 @@
 			"noWakeUpBefore": 25200,
 			"mode": "driving"
 		},
+		"weatherCheck":{
+			"weatherConditionsCheck": [
+				{
+					"type": "Clouds",
+					"maxIntensity": 3
+				}
+			]
+		},
 		"shouldStartAt": 32400,
 		"preparationDuration": 3600
 	},
