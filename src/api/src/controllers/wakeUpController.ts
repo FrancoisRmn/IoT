@@ -23,11 +23,14 @@ class WakeUpController {
 
         const config = await configDataAccess.get();
         const direction = await this.getDirectionModel(config);
-        const wuTimeOffice = this.calcWakeUpTimeOfficeWorking(direction.departureTime,config);
+        const wuTimeOffice = this.calcWakeUpTimeOfficeWorking(direction.departureTime,config.officeWorkingConfig);
         if (config.preferHomeWorking) {
             if (config.homeWorkingConfig.agendaCheck) {
                 const events = await agendaDataAccess.getEvents(new URL(config.homeWorkingConfig.agendaCheck.url));
-                const eventFound = events.find(e => e.location === config.officeWorkingConfig.address)
+                const eventFound = events.find(e => 
+                    e.location === config.officeWorkingConfig.address &&
+                    moment().startOf('day').isSame(moment(e.startDate).startOf('day'))
+                    )
                 if (eventFound) {
                     return new WakeUpModel(wuTimeOffice, new AgendaWakeUpReason(config.homeWorkingConfig,config.homeWorkingConfig.agendaCheck, eventFound))
                 }
@@ -109,20 +112,11 @@ class WakeUpController {
     }
 
     private calcWakeUpTimeHomeWorking(config: HomeWorkingConfig): number {
-        return moment()
-            .startOf('date')
-            .seconds(config.shouldStartAt)
-            .subtract(config.preparationDuration)
-            .unix()
+        return config.shouldStartAt - config.preparationDuration
     }
 
-    private calcWakeUpTimeOfficeWorking(dpTime: number, config: WakeUpConfig): number{
-        return moment()
-        .startOf('date')
-        .seconds(config.officeWorkingConfig.shouldStartAt)
-        .subtract(config.officeWorkingConfig.preparationDuration)
-        .subtract(dpTime)
-        .unix()
+    private calcWakeUpTimeOfficeWorking(dpTime: number, config: OfficeWorkingConfig): number{
+        return dpTime - config.preparationDuration
     }
 
 }

@@ -1,13 +1,13 @@
 {
-	"preferHomeWorking":true,
+	"preferHomeWorking":false,
 	"officeWorkingConfig": {
-		"address": "Rue Grandgagnage 1 5000 Namur",
+		"address": "Rue Grandgagnage 1, 5000 Namur, Belgique",
 		"position": {
 			"lat": 50.4665244,
 			"lon": 4.858591400000001
 		},
 		"directionCheck":{
-			"noWakeUpBefore": 420,
+			"noWakeUpBefore": 25200,
 			"mode": "driving"
 		},
 		"shouldStartAt": 32400,
@@ -20,7 +20,7 @@
 			"lon": 4.8890628
 		},
 		"agendaCheck":{
-			"url": "https://ade.unamur.be/jsp/custom/modules/plannings/anonymous_cal.jsp?resources=1959&projectId=1&calType=ical&nbWeeks=52&displayConfigId=8"
+			"url": "https://calendar.google.com/calendar/ical/6h4t0tarl7tm9f2j6bchh22kus%40group.calendar.google.com/public/basic.ics"
 		},
 		"shouldStartAt": 32400,
 		"preparationDuration": 1800

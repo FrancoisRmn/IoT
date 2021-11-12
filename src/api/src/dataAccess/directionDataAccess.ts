@@ -32,8 +32,6 @@ class DirectionDataAccess{
                 }
             })).data
             
-            console.log(data.routes[0].legs[0])
-
             return {
                 departureTime: arrivalTime - (data.routes[0].legs[0].duration.value)
             }
