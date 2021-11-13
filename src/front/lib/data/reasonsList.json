@@ -1,0 +1,18 @@
+[
+  {
+    "name": "Agenda",
+    "description": "Agenda renseigné à la configuration"
+  },
+  {
+    "name": "Météo",
+    "description": "Qualité de la météo du jour"
+  },
+  {
+    "name": "Qualité de l'air",
+    "description": "Qualité de l'air près du domicile et près du lieu de travail"
+  },
+  {
+    "name": "Traffic",
+    "description": "Transport entre le lieu de domicile et le lieu de travail"
+  }
+]

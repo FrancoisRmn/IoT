@@ -5,6 +5,10 @@ const double TITLEFONTSIZE = 18;
 
 class WakeUpTheme {
   static ThemeData appTheme = ThemeData(
+    textTheme: const TextTheme(
+      headline1: TextStyle(fontSize: 150.0, color: Colors.white, fontWeight: FontWeight.bold),
+      headline5: TextStyle(fontSize: 20,color: Color(0xFF00BCB8))
+    ),
     primaryColorBrightness: Brightness.dark,
     primaryColor: Color(0xFF00BCB8),
     backgroundColor: Colors.white,

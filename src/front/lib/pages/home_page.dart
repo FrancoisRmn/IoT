@@ -6,7 +6,7 @@ import 'package:front/widget/container_wake_up_detail.dart';
 import 'package:front/widget/container_wake_up_reasons.dart';
 import 'package:front/widget/container_wake_up_time.dart';
 
-class HomePage extends StatefulWidget{
+class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
   @override
@@ -20,7 +20,7 @@ class _HomePageState extends State<HomePage> {
       appBar: const Appbar(),
       backgroundColor: WakeUpTheme.appTheme.backgroundColor,
       body: SafeArea(
-        child: Column(
+        child: ListView(
           children: const [
             WakeUpTime(),
             WakeUpReasons(),

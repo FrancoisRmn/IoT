@@ -33,7 +33,7 @@ class App extends StatelessWidget {
               return const Text('Error');
             } else if (snapshot.hasData) {
               bool? isAlarmClockConnected =
-              snapshot.data!.getBool(IS_RASPBERRY_CONNECTED);
+                  snapshot.data!.getBool(IS_RASPBERRY_CONNECTED);
               if (isAlarmClockConnected == null) {
                 return const ConnectAlarmClock();
               } else {

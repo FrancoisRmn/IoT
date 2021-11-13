@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:front/resource/theme.dart';
+import 'package:front/widget/decoration_wake_up_container.dart';
 
 class WakeUpTime extends StatefulWidget {
   const WakeUpTime({Key? key}) : super(key: key);
@@ -10,6 +12,13 @@ class WakeUpTime extends StatefulWidget {
 class _WakeUpTimeState extends State<WakeUpTime> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Container(
+          decoration: WakeUpContainerDecoration().create(),
+          child: Center(
+              child:
+                  Text('7:15', style: Theme.of(context).textTheme.headline1)),
+        ));
   }
 }
