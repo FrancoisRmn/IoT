@@ -3,6 +3,9 @@ import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_blue/flutter_blue.dart';
+import 'package:front/pages/home_page.dart';
+import 'package:front/resource/constants.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ConnectAlarmClock extends StatefulWidget {
   const ConnectAlarmClock({Key? key}) : super(key: key);
@@ -55,6 +58,31 @@ class BluetoothOffScreen extends StatelessWidget {
 }
 
 class FindDevicesScreen extends StatelessWidget {
+  void updatePref(context) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setBool(IS_RASPBERRY_CONNECTED, true);
+    Navigator.of(context).pushAndRemoveUntil(
+        PageRouteBuilder(
+            opaque: true,
+            settings: const RouteSettings(name: "chatPage"),
+            transitionDuration: const Duration(milliseconds: 300),
+            pageBuilder: (BuildContext context, animation, secondaryAnimation) {
+              return const HomePage();
+            },
+            transitionsBuilder: (context, Animation<double> animation,
+                secondaryAnimation, Widget child) {
+              return FadeTransition(
+                  opacity: animation,
+                  child: SlideTransition(
+                    position: Tween<Offset>(
+                            begin: Offset(1.0, 0.0), end: Offset(0.0, 0.0))
+                        .animate(animation),
+                    child: child,
+                  ));
+            }),
+        ModalRoute.withName('/connectAlarmClock'));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -115,6 +143,12 @@ class FindDevicesScreen extends StatelessWidget {
                       .toList(),
                 ),
               ),
+              OutlinedButton(
+                onPressed: () {
+                  updatePref(context);
+                },
+                child: const Text('Connect to Raspberry Pi'),
+              )
             ],
           ),
         ),
