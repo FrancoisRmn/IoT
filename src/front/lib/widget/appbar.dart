@@ -17,7 +17,7 @@ class _AppbarState extends State<Appbar> {
   Widget build(BuildContext context) {
     return AppBar(
         centerTitle: true,
-        backgroundColor: WakeUpTheme.appTheme.primaryColor,
+        backgroundColor: Theme.of(context).primaryColor,
         title: const Text("WAKUP",
             textScaleFactor: 1.2,
             style: TextStyle(

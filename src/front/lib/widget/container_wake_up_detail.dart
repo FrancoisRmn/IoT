@@ -11,15 +11,23 @@ class WakeUpDetail extends StatefulWidget {
 }
 
 class _WakeUpDetailState extends State<WakeUpDetail> {
-  
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 8),
-      child: Container(
-        decoration: WakeUpContainerDecoration().create(),
-        child: Text(widget.textDescription.value),
-      ),
-    );
+    return widget.textDescription.value != ""
+        ? Padding(
+            padding: const EdgeInsets.only(top: 8),
+            child: Container(
+              decoration: WakeUpContainerDecoration().create(context),
+              child: Center(
+                  child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  widget.textDescription.value,
+                  style: Theme.of(context).textTheme.bodyText1,
+                ),
+              )),
+            ),
+          )
+        : Container();
   }
 }

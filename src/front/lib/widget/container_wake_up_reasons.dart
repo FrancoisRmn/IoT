@@ -15,6 +15,7 @@ class WakeUpReasons extends StatefulWidget {
 
 class _WakeUpReasonsState extends State<WakeUpReasons> {
   final textDescription = ValueNotifier("");
+  final selectedReason = "Traffic";
 
   Future<dynamic> _readJson() async {
     final String response =
@@ -32,8 +33,11 @@ class _WakeUpReasonsState extends State<WakeUpReasons> {
             } else if (snapshot.hasData) {
               List<dynamic> listReasons = snapshot.data;
               List<WakeUpReason> listWakeUpReason = listReasons
-                  .map((element) => WakeUpReason(element["name"]!,
-                      element["description"], textDescription))
+                  .map((element) => WakeUpReason(
+                      element["name"]!,
+                      element["description"],
+                      textDescription,
+                      element["name"] == selectedReason))
                   .toList();
               List<WakeUpReason> secondTableRow =
                   List<WakeUpReason>.from(listWakeUpReason);
@@ -47,7 +51,8 @@ class _WakeUpReasonsState extends State<WakeUpReasons> {
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         Container(
-                            decoration: WakeUpContainerDecoration().create(),
+                            decoration:
+                                WakeUpContainerDecoration().create(context),
                             child: Table(
                               children: [
                                 TableRow(children: listWakeUpReason),

@@ -1,11 +1,10 @@
-import 'package:flutter/cupertino.dart';
-import 'package:front/resource/theme.dart';
+import 'package:flutter/material.dart';
 
 class WakeUpContainerDecoration {
-  BoxDecoration create() {
+  BoxDecoration create(BuildContext context) {
     return BoxDecoration(
       borderRadius: const BorderRadius.all(Radius.circular(20)),
-      color: WakeUpTheme.appTheme.primaryColor,
+      color: Theme.of(context).primaryColor,
     );
   }
 }

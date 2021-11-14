@@ -5,7 +5,10 @@ class WakeUpReason extends StatelessWidget {
   final String reasonText;
   final String reasonDescription;
   final ValueNotifier<String> valueNotifier;
-  const WakeUpReason(this.reasonText, this.reasonDescription, this.valueNotifier,
+  final bool isReasonToWakeUp;
+
+  const WakeUpReason(this.reasonText, this.reasonDescription,
+      this.valueNotifier, this.isReasonToWakeUp,
       {Key? key})
       : super(key: key);
 
@@ -19,15 +22,14 @@ class WakeUpReason extends StatelessWidget {
           shape: MaterialStateProperty.all<RoundedRectangleBorder>(
               RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(18.0))),
-          backgroundColor: MaterialStateProperty.all<Color>(
-              WakeUpTheme.appTheme.backgroundColor)),
+          backgroundColor: isReasonToWakeUp ?MaterialStateProperty.all<Color>(
+              Theme.of(context).backgroundColor): MaterialStateProperty.all<Color>(
+              Theme.of(context).disabledColor)),
       child: Text(
         reasonText,
-        style: WakeUpTheme.appTheme.textTheme.headline5,
+        style: Theme.of(context).textTheme.headline5,
       ),
-      onPressed: () => {
-        valueNotifier.value = reasonDescription
-      },
+      onPressed: () => {valueNotifier.value = reasonDescription},
     ));
   }
 }
