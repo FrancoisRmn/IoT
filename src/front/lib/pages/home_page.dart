@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:front/resource/theme.dart';
 import 'package:front/widget/appbar.dart';
-import 'package:front/widget/container_wake_up_detail.dart';
 import 'package:front/widget/container_wake_up_reasons.dart';
 import 'package:front/widget/container_wake_up_time.dart';
 
@@ -14,6 +13,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,10 +21,9 @@ class _HomePageState extends State<HomePage> {
       backgroundColor: WakeUpTheme.appTheme.backgroundColor,
       body: SafeArea(
         child: ListView(
-          children: const [
+          children: [
             WakeUpTime(),
             WakeUpReasons(),
-            WakeUpDetail(),
           ],
         ),
       ),

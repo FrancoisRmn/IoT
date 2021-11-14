@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:front/resource/theme.dart';
 import 'package:front/widget/decoration_wake_up_container.dart';
 
 class WakeUpTime extends StatefulWidget {
