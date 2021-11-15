@@ -1,6 +1,7 @@
 import { WeatherCondition, WorkingConfig } from "../wake-up-config/WakeUpConfigModel";
 import { WeatherModel } from "../weather/WeatherModel";
 import { ViolatedCheckWakeUpReason } from "./ViolatedCheckWakeUpReason";
+import { ViolationType } from "./ViolationType";
 
 export class WeatherConditionWakeUpReason extends ViolatedCheckWakeUpReason {
 
@@ -8,7 +9,7 @@ export class WeatherConditionWakeUpReason extends ViolatedCheckWakeUpReason {
         config: WorkingConfig,
         violatedCheck: WeatherCondition,
         currentData: WeatherModel) {
-        super(config, violatedCheck, currentData)
+        super(config, violatedCheck, currentData, ViolationType.WEATHER)
     }
 
     public get reasonText(): string {

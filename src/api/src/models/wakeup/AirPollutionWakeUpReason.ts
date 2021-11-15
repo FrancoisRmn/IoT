@@ -1,6 +1,7 @@
 import { AirPollutionModel } from "../air-pollution/AirPollutionModel";
 import { AirPollutionCheck, WorkingConfig } from "../wake-up-config/WakeUpConfigModel";
 import { ViolatedCheckWakeUpReason } from "./ViolatedCheckWakeUpReason";
+import { ViolationType } from "./ViolationType";
 
 export class AirPollutionWakeUpReason extends ViolatedCheckWakeUpReason{
 
@@ -8,7 +9,7 @@ export class AirPollutionWakeUpReason extends ViolatedCheckWakeUpReason{
         config: WorkingConfig,
         violatedCheck: AirPollutionCheck,
         currentData: AirPollutionModel){
-            super(config,violatedCheck,currentData)
+            super(config,violatedCheck,currentData, ViolationType.AIR_POLLUTION)
         }
 
     public get reasonText():string{
