@@ -19,7 +19,7 @@ class WakeUpTheme {
     brightness: Brightness.light,
     dividerColor: Color(0xFFE2E2E5),
     primaryColorDark: Color(0xFFD5D5D5),
-    disabledColor: Colors.grey,
+    disabledColor: Color(0xFF324B4A),
     fontFamily: 'Roboto-Regular',
   );
 }

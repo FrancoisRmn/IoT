@@ -39,11 +39,14 @@ class _WakeUpReasonsState extends State<WakeUpReasons> {
                       textDescription,
                       element["name"] == selectedReason))
                   .toList();
-              List<WakeUpReason> secondTableRow =
-                  List<WakeUpReason>.from(listWakeUpReason);
+              List<Widget> secondTableRow =
+                  List<Widget>.from(listWakeUpReason);
               int middleList = (listWakeUpReason.length / 2).round();
               listWakeUpReason.removeRange(middleList, listWakeUpReason.length);
               secondTableRow.removeRange(0, middleList);
+              if(listWakeUpReason.length != secondTableRow.length) {
+                secondTableRow.add(Container());
+              }
               return ValueListenableBuilder<String>(
                   valueListenable: textDescription,
                   builder: (context, value, child) {
