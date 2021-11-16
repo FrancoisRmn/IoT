@@ -9,21 +9,21 @@ import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence
 import scala.concurrent.duration.{Duration, SECONDS}
 import scala.concurrent.{Await, Future}
 
+object Main extends cask.MainRoutes {
 
-object Main {
-	def main(args: Array[String]): Unit = {
+	initialize()
+
+	@cask.get("/")
+	def main(): String = {
 		MQTTConnection()
-		System.exit(0)
-
 	}
 
-	private def MQTTConnection(): Unit = {
+	private def MQTTConnection(): String = {
 		val connectionSettings = MqttConnectionSettings(
 			"tcp://192.168.0.125:1883", // (1)
 			"test-scala-client", // (2)
 			new MemoryPersistence // (3)
 		)
-
 
 		val mqttSource: Source[MqttMessage, Future[Done]] =
 			MqttSource.atMostOnce(
@@ -42,10 +42,7 @@ object Main {
 
 		Await.ready(result, Duration(30, SECONDS))
 
-		val index = convertToInt(result.toString)
-
-		println(index)
-		//todo websocket pour renvoyer index
+		convertToInt(result.toString).toString
 	}
 
 	private def convertToInt(receivedResult: String): Int = {
