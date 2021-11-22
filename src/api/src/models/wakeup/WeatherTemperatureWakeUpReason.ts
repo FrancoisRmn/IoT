@@ -30,4 +30,9 @@ export class WeatherTemperatureWakeUpReason extends ViolatedCheckWakeUpReason {
             }
         }
     }
+
+    public get homeWorking():boolean{
+        return true
+    }
+
 }
