@@ -12,7 +12,8 @@ router.get( "/", async ( req, res ) => {
         const wakeUp = await wakeupController.getWakeUp()
         ok(res, <WakeUpDAO>{
             time: wakeUp.time,
-            reason: wakeUp.reason.reasonText
+            reason: wakeUp.reason.reasonText,
+            homeWorking: wakeUp.reason.homeWorking
         })
     }catch(err){
         handleError(err,res)

@@ -17,4 +17,8 @@ export class AgendaWakeUpReason extends ViolatedCheckWakeUpReason{
     public get reasonText():string{
         return `You have an appointment for today at ${formatDate((this.currentData as AgendaEventModel).startDate)} named "${(this.currentData as AgendaEventModel).summary}"`
     }
+
+    public get homeWorking():boolean{
+        return false
+    }
 }

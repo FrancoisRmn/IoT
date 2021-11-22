@@ -6,6 +6,7 @@ export abstract class WakeUpReason{
         private _config: WorkingConfig){}
 
     public abstract get reasonText():string
+    public abstract get homeWorking():boolean
 
     public get config(): WorkingConfig{
         return this._config

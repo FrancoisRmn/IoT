@@ -15,4 +15,8 @@ export class WeatherConditionWakeUpReason extends ViolatedCheckWakeUpReason {
     public get reasonText(): string {
         return `Weather condition named "${(<WeatherModel>this.currentData).condition.type}" has an intensity of ${(<WeatherModel>this.currentData).condition.intensity} but should be under ${(<WeatherCondition>this.violatedCheck).maxIntensity} near ${this.config.address}`
     }
+
+    public get homeWorking():boolean{
+        return true
+    }
 }
