@@ -54,7 +54,7 @@ First of all you need to clone the repo :
 
 You need to setup the raspberry for launching all services on start. You can use the command below : 
 
-```todo script```
+```./setup.sh```
 
 The script will launch automatically all services
 
