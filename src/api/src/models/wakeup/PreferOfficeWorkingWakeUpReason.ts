@@ -12,7 +12,7 @@ export class PreferOfficeWorkingWakeUpReason extends WakeUpReason{
         }
 
     public get reasonText():string{
-        return `You prefer to going to the office. You have ${secondsToMinutes(this.config.preparationDuration)} minutes to get ready and leave your house at ${formatTime(this.direction.departureTime)}`
+        return `You prefer to going to the office.\nYou have ${secondsToMinutes(this.config.preparationDuration)} minutes to get ready and leave your house at ${formatTime(this.direction.departureTime)}.\nHere is the summary of your travel : ${this.direction.summary}`
     }
 
     public get homeWorking():boolean{

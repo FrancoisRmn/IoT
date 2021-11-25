@@ -12,6 +12,7 @@ class ConfigDataAccess{
     private readonly FORMAT = "utf8"
 
     public async save(config: WakeUpConfig): Promise<WakeUpConfig>{
+
         const writeFile = promisify(fs.writeFile);
         try{
             await writeFile(this.FILE_NAME, JSON.stringify(config), this.FORMAT)
