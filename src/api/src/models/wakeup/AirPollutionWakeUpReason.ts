@@ -15,4 +15,8 @@ export class AirPollutionWakeUpReason extends ViolatedCheckWakeUpReason{
     public get reasonText():string{
         return `Air quality is too bad near ${this.config.address} (aqi: ${(<AirPollutionModel>this.currentData).aqi})`
     }
+
+    public get homeWorking():boolean{
+        return true
+    }
 }

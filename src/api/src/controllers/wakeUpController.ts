@@ -120,9 +120,7 @@ class WakeUpController {
             config.officeWorkingConfig.directionCheck.mode
         )
 
-        return {
-            departureTime: directionModel.departureTime,
-        }
+        return directionModel
     }
 
     private calcWakeUpTimeHomeWorking(config: HomeWorkingConfig): number {

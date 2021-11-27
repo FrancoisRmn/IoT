@@ -16,4 +16,8 @@ export class TooEarlyWakeUpReason extends ViolatedCheckWakeUpReason{
     public get reasonText(): string{
         return `Traffic does not allow you to go to the office because you would have to leave at ${moment().startOf('day').seconds((this.currentData as DirectionModel).departureTime).format("h:mm:ss a")} (you asked not to be woken up before ${moment().startOf('day').seconds((this.violatedCheck as DirectionCheck).noWakeUpBefore).format("h:mm:ss a")})`
     }
+
+    public get homeWorking():boolean{
+        return true
+    }
 }

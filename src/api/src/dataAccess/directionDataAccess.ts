@@ -1,6 +1,6 @@
 import { TransitMode, TravelMode } from "@googlemaps/google-maps-services-js";
 import { mapsClient } from "../middlewares/mapsClient";
-import { RouteModel } from "../models/direction/RouteModel";
+import { DirectionModel } from "../models/direction/DirectionModel";
 import { RoutingProfile } from "../models/direction/RoutingProfile"
 import { SystemException } from "../models/exceptions/SystemException";
 require('dotenv').config();
@@ -14,7 +14,7 @@ class DirectionDataAccess{
         latDest:number,
         lonDest:number,
         profile: RoutingProfile,
-        ): Promise<RouteModel>{
+        ): Promise<DirectionModel>{
         try{
             const data = (await mapsClient.directions({
                 params:{
@@ -33,7 +33,8 @@ class DirectionDataAccess{
             })).data
             
             return {
-                departureTime: arrivalTime - (data.routes[0].legs[0].duration.value)
+                departureTime: arrivalTime - (data.routes[0].legs[0].duration.value),
+                summary: data.routes[0].summary
             }
 
         }catch(err){
