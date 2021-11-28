@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:front/pages/configuration_page.dart';
 import 'package:front/resource/constants.dart';
 import 'package:front/resource/theme.dart';
 
 class Appbar extends StatefulWidget implements PreferredSizeWidget {
-  const Appbar({Key? key}) : super(key: key);
+  final bool hasAction;
+  const Appbar({Key? key, required this.hasAction}) : super(key: key);
 
   @override
   _AppbarState createState() => _AppbarState();
@@ -22,7 +24,7 @@ class _AppbarState extends State<Appbar> {
             textScaleFactor: 1.2,
             style: TextStyle(
                 fontFamily: 'Roboto-Black', fontWeight: FontWeight.bold)),
-        actions: <Widget>[
+        actions: widget.hasAction ? <Widget>[
           IconButton(
             icon: const Icon(
               Icons.settings,
@@ -35,7 +37,7 @@ class _AppbarState extends State<Appbar> {
                       const Duration(milliseconds: DURATION_ANIMATION),
                   pageBuilder:
                       (BuildContext context, animation, secondaryAnimation) {
-                    return Container(); //TODO Config reveil
+                    return const ConfigurationPage();
                   },
                   transitionsBuilder: (context, Animation<double> animation,
                       secondaryAnimation, Widget child) {
@@ -51,6 +53,6 @@ class _AppbarState extends State<Appbar> {
                   }));
             },
           ),
-        ]);
+        ]: []);
   }
 }

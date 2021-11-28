@@ -17,7 +17,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const Appbar(),
+      appBar: const Appbar(hasAction: true,),
       backgroundColor: Theme.of(context).backgroundColor,
       body: SafeArea(
         child: FutureBuilder(

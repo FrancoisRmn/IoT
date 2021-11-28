@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:front/pages/connect_alarm_clock.dart';
+import 'package:front/pages/connect_alarm_clock_page.dart';
 import 'package:front/pages/home_page.dart';
 import 'package:front/resource/constants.dart';
 import 'package:front/resource/theme.dart';
