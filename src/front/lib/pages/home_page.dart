@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:front/resource/theme.dart';
+import 'package:front/data/api.dart';
+import 'package:front/model/wake_up_response.dart';
 import 'package:front/widget/appbar.dart';
 import 'package:front/widget/container_wake_up_reasons.dart';
 import 'package:front/widget/container_wake_up_time.dart';
@@ -13,18 +14,31 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const Appbar(),
       backgroundColor: Theme.of(context).backgroundColor,
       body: SafeArea(
-        child: ListView(
-          children: [
-            WakeUpTime(),
-            WakeUpReasons(),
-          ],
+        child: FutureBuilder(
+          future: fetchWakeUpReason(),
+          builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+            if (snapshot.connectionState == ConnectionState.done) {
+              if (snapshot.hasError) {
+                return Text(snapshot.error.toString());
+              } else {
+                WakeUpResponse wakeUpReason = snapshot.data;
+                return ListView(
+                  children: [
+                    WakeUpTime("7:15"),
+                    WakeUpReasons(),
+                  ],
+                );
+              }
+            } else {
+              return const CircularProgressIndicator();
+            }
+          },
         ),
       ),
     );
