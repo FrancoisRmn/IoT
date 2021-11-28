@@ -1,18 +1,22 @@
 [
   {
     "name": "Agenda",
+    "category": "Agenda",
     "description": "Agenda renseigné à la configuration"
   },
   {
     "name": "Météo",
+    "category": "Weather",
     "description": "Qualité de la météo du jour"
   },
   {
     "name": "Qualité de l'air",
+    "category": "Air quality",
     "description": "Qualité de l'air près du domicile et près du lieu de travail"
   },
   {
     "name": "Traffic",
+    "category": "Traffic",
     "description": "Accident sur la E411 causant un retard de 45 minutes"
   }
 ]

@@ -2,12 +2,14 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:front/model/wake_up_response.dart';
 import 'package:front/widget/container_wake_up_detail.dart';
 import 'package:front/widget/decoration_wake_up_container.dart';
 import 'package:front/widget/wake_up_reason.dart';
 
 class WakeUpReasons extends StatefulWidget {
-  WakeUpReasons({Key? key}) : super(key: key);
+  final WakeUpResponse wakeUpResponse;
+  WakeUpReasons({Key? key, required this.wakeUpResponse}) : super(key: key);
 
   @override
   _WakeUpReasonsState createState() => _WakeUpReasonsState();
@@ -15,7 +17,6 @@ class WakeUpReasons extends StatefulWidget {
 
 class _WakeUpReasonsState extends State<WakeUpReasons> {
   final textDescription = ValueNotifier("");
-  final selectedReason = "Traffic";
 
   Future<dynamic> _readJson() async {
     final String response =
@@ -24,6 +25,7 @@ class _WakeUpReasonsState extends State<WakeUpReasons> {
   }
 
   Widget createTable() {
+    textDescription.value = widget.wakeUpResponse.reason;
     return FutureBuilder(
         future: _readJson(),
         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
@@ -33,18 +35,21 @@ class _WakeUpReasonsState extends State<WakeUpReasons> {
             } else if (snapshot.hasData) {
               List<dynamic> listReasons = snapshot.data;
               List<WakeUpReason> listWakeUpReason = listReasons
-                  .map((element) => WakeUpReason(
-                      element["name"]!,
-                      element["description"],
-                      textDescription,
-                      element["name"] == selectedReason))
+                  .map((element) =>
+                      element["category"] == widget.wakeUpResponse.category
+                          ? WakeUpReason(
+                              element["name"]!,
+                              widget.wakeUpResponse.reason,
+                              textDescription,
+                              true)
+                          : WakeUpReason(
+                              element["name"]!, null, textDescription, false))
                   .toList();
-              List<Widget> secondTableRow =
-                  List<Widget>.from(listWakeUpReason);
+              List<Widget> secondTableRow = List<Widget>.from(listWakeUpReason);
               int middleList = (listWakeUpReason.length / 2).round();
               listWakeUpReason.removeRange(middleList, listWakeUpReason.length);
               secondTableRow.removeRange(0, middleList);
-              if(listWakeUpReason.length != secondTableRow.length) {
+              if (listWakeUpReason.length != secondTableRow.length) {
                 secondTableRow.add(Container());
               }
               return ValueListenableBuilder<String>(

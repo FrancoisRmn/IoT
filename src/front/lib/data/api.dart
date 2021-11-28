@@ -6,11 +6,11 @@ import 'package:http/http.dart' as http;
 
 Future<WakeUpResponse> fetchWakeUpReason() async {
   final response = await http
-      .get(Uri.parse(API_URL));
+      .get(Uri.parse(API_URL+ "wakeup"));
 
   if (response.statusCode == 200) {
     return WakeUpResponse.fromJson(jsonDecode(response.body));
   } else {
-    throw Exception('Failed to load album');
+    throw Exception('Failed to load WakeUpResponse');
   }
 }

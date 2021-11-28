@@ -30,8 +30,8 @@ class _HomePageState extends State<HomePage> {
                 WakeUpResponse wakeUpReason = snapshot.data;
                 return ListView(
                   children: [
-                    WakeUpTime("7:15"),
-                    WakeUpReasons(),
+                    WakeUpTime(wakeUpReason.formatSeconds()),
+                    WakeUpReasons(wakeUpResponse: wakeUpReason,),
                   ],
                 );
               }
