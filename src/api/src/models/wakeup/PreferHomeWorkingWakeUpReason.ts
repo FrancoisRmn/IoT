@@ -1,4 +1,5 @@
 import { WakeUpReason } from "./WakeUpReason";
+import { WakeUpReasonCategory } from "./WakeUpReasonCategory";
 
 export class PreferHomeWorkingWakeUpReason extends WakeUpReason{
 
@@ -8,5 +9,9 @@ export class PreferHomeWorkingWakeUpReason extends WakeUpReason{
 
     public get homeWorking():boolean{
         return true
+    }
+
+    public get category(): WakeUpReasonCategory{
+        return WakeUpReasonCategory.USUAL
     }
 }

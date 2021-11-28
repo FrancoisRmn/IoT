@@ -13,7 +13,8 @@ router.get( "/", async ( req, res ) => {
         ok(res, <WakeUpDAO>{
             time: wakeUp.time,
             reason: wakeUp.reason.reasonText,
-            homeWorking: wakeUp.reason.homeWorking
+            homeWorking: wakeUp.reason.homeWorking,
+            category: wakeUp.reason.category
         })
     }catch(err){
         handleError(err,res)

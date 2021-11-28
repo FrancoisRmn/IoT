@@ -2,6 +2,7 @@ import { formatTime, secondsToMinutes } from "../../utils/dateUtils";
 import { DirectionModel } from "../direction/DirectionModel";
 import { WorkingConfig } from "../wake-up-config/WakeUpConfigModel";
 import { WakeUpReason } from "./WakeUpReason";
+import { WakeUpReasonCategory } from "./WakeUpReasonCategory";
 
 export class PreferOfficeWorkingWakeUpReason extends WakeUpReason{
 
@@ -17,5 +18,9 @@ export class PreferOfficeWorkingWakeUpReason extends WakeUpReason{
 
     public get homeWorking():boolean{
         return false
+    }
+
+    public get category(): WakeUpReasonCategory{
+        return WakeUpReasonCategory.USUAL
     }
 }

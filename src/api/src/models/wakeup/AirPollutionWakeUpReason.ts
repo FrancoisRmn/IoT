@@ -1,7 +1,7 @@
 import { AirPollutionModel } from "../air-pollution/AirPollutionModel";
 import { AirPollutionCheck, WorkingConfig } from "../wake-up-config/WakeUpConfigModel";
 import { ViolatedCheckWakeUpReason } from "./ViolatedCheckWakeUpReason";
-import { ViolationType } from "./ViolationType";
+import { WakeUpReasonCategory } from "./WakeUpReasonCategory";
 
 export class AirPollutionWakeUpReason extends ViolatedCheckWakeUpReason{
 
@@ -9,7 +9,7 @@ export class AirPollutionWakeUpReason extends ViolatedCheckWakeUpReason{
         config: WorkingConfig,
         violatedCheck: AirPollutionCheck,
         currentData: AirPollutionModel){
-            super(config,violatedCheck,currentData, ViolationType.AIR_POLLUTION)
+            super(config,violatedCheck,currentData)
         }
 
     public get reasonText():string{
@@ -18,5 +18,9 @@ export class AirPollutionWakeUpReason extends ViolatedCheckWakeUpReason{
 
     public get homeWorking():boolean{
         return true
+    }
+
+    public get category(): WakeUpReasonCategory{
+        return WakeUpReasonCategory.AIR_QUALITY
     }
 }

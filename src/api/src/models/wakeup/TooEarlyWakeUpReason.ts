@@ -3,6 +3,7 @@ import { DirectionModel } from "../direction/DirectionModel";
 import { DirectionCheck, WorkingConfig } from "../wake-up-config/WakeUpConfigModel";
 import { ViolatedCheckWakeUpReason } from "./ViolatedCheckWakeUpReason";
 import { ViolationType } from "./ViolationType";
+import { WakeUpReasonCategory } from "./WakeUpReasonCategory";
 
 export class TooEarlyWakeUpReason extends ViolatedCheckWakeUpReason{
 
@@ -10,7 +11,7 @@ export class TooEarlyWakeUpReason extends ViolatedCheckWakeUpReason{
         config: WorkingConfig,
         violatedCheck: DirectionCheck,
         currentData: DirectionModel){
-            super(config,violatedCheck,currentData, ViolationType.TRAFFIC)
+            super(config,violatedCheck,currentData)
         }
 
     public get reasonText(): string{
@@ -19,5 +20,9 @@ export class TooEarlyWakeUpReason extends ViolatedCheckWakeUpReason{
 
     public get homeWorking():boolean{
         return true
+    }
+
+    public get category(): WakeUpReasonCategory{
+        return WakeUpReasonCategory.TRAFFIC
     }
 }
