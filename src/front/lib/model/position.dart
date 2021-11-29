@@ -1,6 +1,6 @@
 class Position {
-  double lat;
-  double lon;
+  double? lat;
+  double? lon;
 
   Position({required this.lat, required this.lon});
 

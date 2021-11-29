@@ -1,6 +1,6 @@
 class DirectionCheck {
-  int noWakeUpBefore;
-  String mode;
+  int? noWakeUpBefore;
+  RoutingProfile? mode;
 
   DirectionCheck({required this.noWakeUpBefore, required this.mode});
 
@@ -16,3 +16,5 @@ class DirectionCheck {
     return data;
   }
 }
+
+enum RoutingProfile { driving, walking, bicycling, transit }

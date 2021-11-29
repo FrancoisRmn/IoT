@@ -2,17 +2,20 @@ import 'home_working_config.dart';
 import 'office_working_config.dart';
 
 class WakeUpConfiguration {
-  bool preferHomeWorking;
+  String? localTimeZone;
+  bool? preferHomeWorking;
   OfficeWorkingConfig? officeWorkingConfig;
   HomeWorkingConfig? homeWorkingConfig;
 
   WakeUpConfiguration(
-      {required this.preferHomeWorking,
+      {required this.localTimeZone,
+      required this.preferHomeWorking,
       required this.officeWorkingConfig,
       required this.homeWorkingConfig});
 
   factory WakeUpConfiguration.fromJson(Map<String, dynamic> json) {
     return WakeUpConfiguration(
+        localTimeZone: json["localTimeZone"],
         preferHomeWorking: json['preferHomeWorking'],
         officeWorkingConfig: json['officeWorkingConfig'] != null
             ? OfficeWorkingConfig.fromJson(json['officeWorkingConfig'])
@@ -24,6 +27,7 @@ class WakeUpConfiguration {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
+    data["localTimeZone"] = localTimeZone;
     data['preferHomeWorking'] = preferHomeWorking;
     if (officeWorkingConfig != null) {
       data['officeWorkingConfig'] = officeWorkingConfig!.toJson();

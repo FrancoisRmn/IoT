@@ -1,23 +1,32 @@
+import 'package:front/model/air_pollution_check.dart';
 import 'package:front/model/position.dart';
+import 'package:front/model/weather_check.dart';
 
 import 'direction_check.dart';
 
 class OfficeWorkingConfig {
-  String address;
-  int shouldStartAt;
-  int preparationDuration;
+  String? address;
+  int? shouldStartAt;
+  int? preparationDuration;
+  int? delay;
   Position? position;
   DirectionCheck? directionCheck;
+  WeatherCheck? weatherCheck;
+  AirPollutionCheck? airPollutionCheck;
 
   OfficeWorkingConfig(
-      {required this.address,
+      {required this.delay,
+      required this.address,
       required this.shouldStartAt,
       required this.preparationDuration,
       required this.position,
-      required this.directionCheck});
+      required this.directionCheck,
+      required this.weatherCheck,
+      required this.airPollutionCheck});
 
   factory OfficeWorkingConfig.fromJson(Map<String, dynamic> json) {
     return OfficeWorkingConfig(
+        delay: json["delay"],
         address: json['address'],
         shouldStartAt: json['shouldStartAt'],
         preparationDuration: json['preparationDuration'],
@@ -26,12 +35,19 @@ class OfficeWorkingConfig {
             : null,
         directionCheck: json['directionCheck'] != null
             ? DirectionCheck.fromJson(json['directionCheck'])
+            : null,
+        airPollutionCheck: json['airPollutionCheck'] != null
+            ? AirPollutionCheck.fromJson(json['airPollutionCheck'])
+            : null,
+        weatherCheck: json['weatherCheck'] != null
+            ? WeatherCheck.fromJson(json['weatherCheck'])
             : null);
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = Map<String, dynamic>();
     data['address'] = address;
+    data['delay'] = delay;
     data['shouldStartAt'] = shouldStartAt;
     data['preparationDuration'] = preparationDuration;
     if (position != null) {
@@ -39,6 +55,12 @@ class OfficeWorkingConfig {
     }
     if (directionCheck != null) {
       data['directionCheck'] = directionCheck!.toJson();
+    }
+    if (airPollutionCheck != null) {
+      data['directionCheck'] = airPollutionCheck!.toJson();
+    }
+    if (weatherCheck != null) {
+      data['directionCheck'] = weatherCheck!.toJson();
     }
     return data;
   }
