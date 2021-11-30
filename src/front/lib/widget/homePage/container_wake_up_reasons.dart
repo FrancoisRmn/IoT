@@ -3,9 +3,9 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:front/model/wake_up_response.dart';
-import 'package:front/widget/container_wake_up_detail.dart';
-import 'package:front/widget/decoration_wake_up_container.dart';
-import 'package:front/widget/wake_up_reason.dart';
+import 'package:front/widget/homePage/container_wake_up_detail.dart';
+import 'package:front/widget/homePage/decoration_wake_up_container.dart';
+import 'package:front/widget/homePage/wake_up_reason.dart';
 
 class WakeUpReasons extends StatefulWidget {
   final WakeUpResponse wakeUpResponse;

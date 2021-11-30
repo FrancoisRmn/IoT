@@ -2,7 +2,24 @@ class DirectionCheck {
   int? noWakeUpBefore;
   RoutingProfile? mode;
 
-  DirectionCheck({required this.noWakeUpBefore, required this.mode});
+  DirectionCheck({required this.noWakeUpBefore, required String mode}) {
+    this.mode = selectRouting(mode);
+  }
+
+  RoutingProfile? selectRouting(String mode) {
+    switch (mode) {
+      case "driving":
+        return RoutingProfile.driving;
+      case "walking":
+        return RoutingProfile.walking;
+      case "bicycling":
+        return RoutingProfile.bicycling;
+      case "transit":
+        return RoutingProfile.transit;
+      default:
+        return null;
+    }
+  }
 
   factory DirectionCheck.fromJson(Map<String, dynamic> json) {
     return DirectionCheck(

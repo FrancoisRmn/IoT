@@ -1,14 +1,16 @@
 class WakeUpResponse {
   final String reason;
-  final int time;
+  String? time;
   final bool isHomeWorking;
   final String category;
 
   WakeUpResponse(
       {required this.category,
-      required this.time,
+      required int time,
       required this.isHomeWorking,
-      required this.reason});
+      required this.reason}) {
+    this.time = formatSeconds(time);
+  }
 
   factory WakeUpResponse.fromJson(Map<String, dynamic> json) {
     return WakeUpResponse(
@@ -18,8 +20,7 @@ class WakeUpResponse {
         category: json['category']);
   }
 
-  String formatSeconds() {
-    int second = time;
+  String formatSeconds(int second) {
     int hours = (second / 3600).floor();
     second %= 3600;
     int minutes = (second / 60).floor();
