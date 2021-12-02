@@ -2,14 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:front/model/wake_up_configuration.dart';
 
 class CheckBoxConfiguration extends StatefulWidget {
-  bool data;
   String title;
   ValueNotifier<WakeUpConfiguration> valueNotifier;
   CheckBoxConfiguration(
-      {Key? key,
-      required this.valueNotifier,
-      required this.data,
-      required this.title})
+      {Key? key, required this.valueNotifier, required this.title})
       : super(key: key);
 
   @override

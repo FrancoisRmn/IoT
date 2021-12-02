@@ -1,3 +1,5 @@
+import 'package:front/resource/utils.dart';
+
 class WakeUpResponse {
   final String reason;
   String? time;
@@ -9,7 +11,7 @@ class WakeUpResponse {
       required int time,
       required this.isHomeWorking,
       required this.reason}) {
-    this.time = formatSeconds(time);
+    this.time = Utils.formatSeconds(time);
   }
 
   factory WakeUpResponse.fromJson(Map<String, dynamic> json) {
@@ -18,12 +20,5 @@ class WakeUpResponse {
         time: json['time'],
         isHomeWorking: json['homeWorking'],
         category: json['category']);
-  }
-
-  String formatSeconds(int second) {
-    int hours = (second / 3600).floor();
-    second %= 3600;
-    int minutes = (second / 60).floor();
-    return hours.toString() + ":" + minutes.toString();
   }
 }

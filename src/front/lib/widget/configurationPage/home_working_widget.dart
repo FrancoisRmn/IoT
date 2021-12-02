@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:front/model/wake_up_configuration.dart';
+import 'package:front/widget/configurationPage/agenda_check_widget.dart';
+import 'package:front/widget/configurationPage/position_widget.dart';
+import 'package:front/widget/configurationPage/working_widget.dart';
 
 class HomeWorking extends StatefulWidget {
-  const HomeWorking({Key? key}) : super(key: key);
+  ValueNotifier<WakeUpConfiguration> valueNotifier;
+  HomeWorking({Key? key, required this.valueNotifier}) : super(key: key);
 
   @override
   _HomeWorkingState createState() => _HomeWorkingState();
@@ -10,6 +15,16 @@ class HomeWorking extends StatefulWidget {
 class _HomeWorkingState extends State<HomeWorking> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Column(
+      children: [
+        WorkingWidget(valueNotifier: widget.valueNotifier),
+        PositionWidget(
+          valueNotifier: widget.valueNotifier,
+        ),
+        AgendaCheckWidget(
+          valueNotifier: widget.valueNotifier,
+        )
+      ],
+    );
   }
 }

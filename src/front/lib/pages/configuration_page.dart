@@ -4,6 +4,8 @@ import 'package:front/data/api.dart';
 import 'package:front/model/wake_up_configuration.dart';
 import 'package:front/widget/appbar.dart';
 import 'package:front/widget/configurationPage/check_box_configuration.dart';
+import 'package:front/widget/configurationPage/home_working_widget.dart';
+import 'package:front/widget/configurationPage/office_working_widget.dart';
 
 class ConfigurationPage extends StatefulWidget {
   const ConfigurationPage({Key? key}) : super(key: key);
@@ -38,10 +40,11 @@ class _ConfigurationPageState extends State<ConfigurationPage> {
                         body: ListView(
                           children: [
                             CheckBoxConfiguration(
-                              data: config.value.preferHomeWorking!,
                               title: "Do you prefer homeworking ?",
                               valueNotifier: config,
-                            )
+                            ),
+                            HomeWorking(valueNotifier: config),
+                            OfficeWorking(valueNotifier: config)
                           ],
                         ));
                   });
