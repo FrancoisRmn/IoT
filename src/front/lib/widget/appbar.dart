@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:front/data/api.dart';
 import 'package:front/model/wake_up_configuration.dart';
 import 'package:front/pages/configuration_page.dart';
 import 'package:front/resource/constants.dart';
@@ -68,7 +69,7 @@ class _AppbarState extends State<Appbar> {
                     color: Colors.white,
                   ),
                   onPressed: () {
-                    print(config!.toJson());
+                    postWakeUpConfiguration(config!);
                   },
                 ),
               ]);

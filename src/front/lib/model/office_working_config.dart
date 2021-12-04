@@ -45,11 +45,19 @@ class OfficeWorkingConfig {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
-    data['address'] = address;
-    data['delay'] = delay;
-    data['shouldStartAt'] = shouldStartAt;
-    data['preparationDuration'] = preparationDuration;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (address != null) {
+      data['address'] = address;
+    }
+    if (delay != null) {
+      data['delay'] = delay;
+    }
+    if (shouldStartAt != null) {
+      data['shouldStartAt'] = shouldStartAt;
+    }
+    if (preparationDuration != null) {
+      data['preparationDuration'] = preparationDuration;
+    }
     if (position != null) {
       data['position'] = position!.toJson();
     }
@@ -57,10 +65,10 @@ class OfficeWorkingConfig {
       data['directionCheck'] = directionCheck!.toJson();
     }
     if (airPollutionCheck != null) {
-      data['directionCheck'] = airPollutionCheck!.toJson();
+      data['airPollutionCheck'] = airPollutionCheck!.toJson();
     }
     if (weatherCheck != null) {
-      data['directionCheck'] = weatherCheck!.toJson();
+      data['weatherCheck'] = weatherCheck!.toJson();
     }
     return data;
   }

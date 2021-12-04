@@ -17,7 +17,8 @@ class _WakeUpDetailState extends State<WakeUpDetail> {
         ? Padding(
             padding: const EdgeInsets.only(top: 8),
             child: Container(
-              decoration: WakeUpContainerDecoration().create(context),
+              decoration: WakeUpContainerDecoration()
+                  .create(context, Theme.of(context).primaryColor),
               child: Center(
                   child: Padding(
                 padding: const EdgeInsets.all(8.0),

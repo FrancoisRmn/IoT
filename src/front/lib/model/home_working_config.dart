@@ -33,9 +33,15 @@ class HomeWorkingConfig {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['address'] = address;
-    data['shouldStartAt'] = shouldStartAt;
-    data['preparationDuration'] = preparationDuration;
+    if (address != null) {
+      data['address'] = address!;
+    }
+    if (shouldStartAt != null) {
+      data['shouldStartAt'] = shouldStartAt;
+    }
+    if (preparationDuration != null) {
+      data['preparationDuration'] = preparationDuration;
+    }
     if (agendaCheck != null) {
       data['agendaCheck'] = agendaCheck!.toJson();
     }

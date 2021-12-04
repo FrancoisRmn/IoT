@@ -10,8 +10,12 @@ class Position {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['lat'] = lat;
-    data['lon'] = lon;
+    if (lat != null) {
+      data['lat'] = lat;
+    }
+    if (lon != null) {
+      data['lon'] = lon;
+    }
     return data;
   }
 }

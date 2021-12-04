@@ -15,7 +15,8 @@ class _WakeUpTimeState extends State<WakeUpTime> {
     return Padding(
         padding: const EdgeInsets.all(8.0),
         child: Container(
-          decoration: WakeUpContainerDecoration().create(context),
+          decoration: WakeUpContainerDecoration()
+              .create(context, Theme.of(context).primaryColor),
           child: Center(
               child: Text(widget.wakeUpHour,
                   style: Theme.of(context).textTheme.headline1)),

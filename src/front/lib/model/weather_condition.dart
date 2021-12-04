@@ -11,8 +11,12 @@ class WeatherCondition {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['type'] = type;
-    data['maxIntensity'] = maxIntensity;
+    if (type != null) {
+      data['type'] = type!;
+    }
+    if (maxIntensity != null) {
+      data['maxIntensity'] = maxIntensity! as String;
+    }
     return data;
   }
 }

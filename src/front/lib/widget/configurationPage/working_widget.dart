@@ -4,7 +4,8 @@ import 'package:front/resource/globals.dart';
 import 'package:front/resource/utils.dart';
 
 class WorkingWidget extends StatefulWidget {
-  const WorkingWidget({Key? key}) : super(key: key);
+  bool isHomeWorking = true;
+  WorkingWidget({Key? key, required this.isHomeWorking}) : super(key: key);
 
   @override
   _WorkingWidgetState createState() => _WorkingWidgetState();
@@ -13,7 +14,9 @@ class WorkingWidget extends StatefulWidget {
 class _WorkingWidgetState extends State<WorkingWidget> {
   @override
   Widget build(BuildContext context) {
-    int? second = config!.homeWorkingConfig!.shouldStartAt;
+    int? second = widget.isHomeWorking
+        ? config!.homeWorkingConfig!.shouldStartAt
+        : config!.officeWorkingConfig!.shouldStartAt;
     int hours = (second! / 3600).floor();
     second %= 3600;
     int minutes = (second / 60).floor();
@@ -27,8 +30,10 @@ class _WorkingWidgetState extends State<WorkingWidget> {
       if (newTime != null) {
         setState(() {
           _time = newTime;
-          config!.homeWorkingConfig!.shouldStartAt =
-              newTime.hour * 3600 + newTime.minute * 60;
+          widget.isHomeWorking
+              ? config!.homeWorkingConfig!.shouldStartAt
+              : config!.officeWorkingConfig!.shouldStartAt =
+                  newTime.hour * 3600 + newTime.minute * 60;
         });
       }
     }
@@ -39,7 +44,9 @@ class _WorkingWidgetState extends State<WorkingWidget> {
           padding: const EdgeInsets.all(8.0),
           child: TextField(
             onChanged: (String value) {
-              config!.homeWorkingConfig!.address = value;
+              widget.isHomeWorking
+                  ? config!.homeWorkingConfig!.address
+                  : config!.officeWorkingConfig!.address = value;
             },
             decoration: const InputDecoration(
               border: OutlineInputBorder(),
@@ -55,13 +62,16 @@ class _WorkingWidgetState extends State<WorkingWidget> {
           ),
         ),
         Text(
-          'Selected time: ${Utils.formatSeconds(config!.homeWorkingConfig!.shouldStartAt!)}',
+          'Selected time: ${Utils.formatSeconds(widget.isHomeWorking ? config!.homeWorkingConfig!.shouldStartAt! : config!.officeWorkingConfig!.shouldStartAt!)}',
         ),
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: TextField(
             onChanged: (String value) {
-              config!.homeWorkingConfig!.preparationDuration = int.parse(value);
+              widget.isHomeWorking
+                  ? config!.homeWorkingConfig!.preparationDuration
+                  : config!.officeWorkingConfig!.preparationDuration =
+                      int.parse(value);
             },
             keyboardType: TextInputType.number,
             decoration: const InputDecoration(
@@ -74,7 +84,9 @@ class _WorkingWidgetState extends State<WorkingWidget> {
           padding: const EdgeInsets.all(8.0),
           child: TextField(
               onChanged: (String value) {
-                config!.homeWorkingConfig!.delay = int.parse(value);
+                widget.isHomeWorking
+                    ? config!.homeWorkingConfig!.delay
+                    : config!.officeWorkingConfig!.delay = int.parse(value);
               },
               keyboardType: TextInputType.number,
               decoration: const InputDecoration(

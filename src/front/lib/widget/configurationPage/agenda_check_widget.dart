@@ -16,7 +16,7 @@ class _AgendaCheckWidgetState extends State<AgendaCheckWidget> {
       padding: const EdgeInsets.all(8.0),
       child: TextField(
         onChanged: (String value) {
-          config!.homeWorkingConfig!.address = value;
+          config!.homeWorkingConfig!.agendaCheck!.url = value;
         },
         decoration: const InputDecoration(
           border: OutlineInputBorder(),

@@ -23,8 +23,12 @@ class WeatherCheck {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['minTemp'] = minTemp;
-    data['maxTemp'] = maxTemp;
+    if (minTemp != null) {
+      data['minTemp'] = minTemp! as String;
+    }
+    if (maxTemp != null) {
+      data['maxTemp'] = maxTemp! as String;
+    }
     if (weatherConditionsCheck != null) {
       data['weatherConditionsCheck'] = weatherConditionsCheck!.toJson();
     }

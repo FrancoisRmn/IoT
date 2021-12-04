@@ -1,5 +1,5 @@
 class AgendaCheck {
-  final String? url;
+  String? url;
 
   AgendaCheck({required this.url});
 
@@ -9,7 +9,9 @@ class AgendaCheck {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['url'] = url;
+    if (url != null) {
+      data['url'] = url!;
+    }
     return data;
   }
 }

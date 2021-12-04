@@ -59,8 +59,8 @@ class _WakeUpReasonsState extends State<WakeUpReasons> {
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         Container(
-                            decoration:
-                                WakeUpContainerDecoration().create(context),
+                            decoration: WakeUpContainerDecoration().create(
+                                context, Theme.of(context).primaryColor),
                             child: Table(
                               children: [
                                 TableRow(children: listWakeUpReason),

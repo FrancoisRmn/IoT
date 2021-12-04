@@ -1,24 +1,11 @@
+import 'package:front/resource/utils.dart';
+
 class DirectionCheck {
   int? noWakeUpBefore;
   RoutingProfile? mode;
 
   DirectionCheck({required this.noWakeUpBefore, required String mode}) {
-    this.mode = selectRouting(mode);
-  }
-
-  RoutingProfile? selectRouting(String mode) {
-    switch (mode) {
-      case "driving":
-        return RoutingProfile.driving;
-      case "walking":
-        return RoutingProfile.walking;
-      case "bicycling":
-        return RoutingProfile.bicycling;
-      case "transit":
-        return RoutingProfile.transit;
-      default:
-        return null;
-    }
+    this.mode = Utils.selectRouting(mode);
   }
 
   factory DirectionCheck.fromJson(Map<String, dynamic> json) {
@@ -28,8 +15,12 @@ class DirectionCheck {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['noWakeUpBefore'] = noWakeUpBefore;
-    data['mode'] = mode;
+    if (noWakeUpBefore != null) {
+      data['noWakeUpBefore'] = noWakeUpBefore;
+    }
+    if (mode != null) {
+      data['mode'] = Utils.selectRoutingToString(mode!)!;
+    }
     return data;
   }
 }

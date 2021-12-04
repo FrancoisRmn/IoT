@@ -27,8 +27,12 @@ class WakeUpConfiguration {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data["localTimeZone"] = localTimeZone;
-    data['preferHomeWorking'] = preferHomeWorking;
+    if (localTimeZone != null) {
+      data["localTimeZone"] = localTimeZone;
+    }
+    if (preferHomeWorking != null) {
+      data['preferHomeWorking'] = preferHomeWorking;
+    }
     if (officeWorkingConfig != null) {
       data['officeWorkingConfig'] = officeWorkingConfig!.toJson();
     }
