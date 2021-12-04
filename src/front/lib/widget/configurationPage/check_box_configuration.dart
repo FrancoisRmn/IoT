@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:front/model/wake_up_configuration.dart';
+import 'package:front/resource/globals.dart';
 
 class CheckBoxConfiguration extends StatefulWidget {
-  String title;
-  ValueNotifier<WakeUpConfiguration> valueNotifier;
-  CheckBoxConfiguration(
-      {Key? key, required this.valueNotifier, required this.title})
+  final String title;
+  const CheckBoxConfiguration({Key? key, required this.title})
       : super(key: key);
 
   @override
@@ -17,10 +16,10 @@ class _CheckBoxConfigurationState extends State<CheckBoxConfiguration> {
   Widget build(BuildContext context) {
     return CheckboxListTile(
         title: Text(widget.title),
-        value: widget.valueNotifier.value.preferHomeWorking,
+        value: config!.preferHomeWorking,
         onChanged: (value) {
           setState(() {
-            widget.valueNotifier.value.preferHomeWorking = value;
+            config!.preferHomeWorking = value;
           });
         });
   }

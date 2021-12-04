@@ -2,16 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:front/model/wake_up_configuration.dart';
 import 'package:front/pages/configuration_page.dart';
 import 'package:front/resource/constants.dart';
-import 'package:front/resource/theme.dart';
+import 'package:front/resource/globals.dart';
 
 class Appbar extends StatefulWidget implements PreferredSizeWidget {
   final bool hasConfigurationAction;
-  WakeUpConfiguration? wakeUpConfiguration;
-  Appbar(
-      {Key? key,
-      required this.hasConfigurationAction,
-      this.wakeUpConfiguration})
-      : super(key: key);
+  const Appbar({
+    Key? key,
+    required this.hasConfigurationAction,
+  }) : super(key: key);
 
   @override
   _AppbarState createState() => _AppbarState();
@@ -70,7 +68,7 @@ class _AppbarState extends State<Appbar> {
                     color: Colors.white,
                   ),
                   onPressed: () {
-                    print(widget.wakeUpConfiguration!.toJson());
+                    print(config!.toJson());
                   },
                 ),
               ]);

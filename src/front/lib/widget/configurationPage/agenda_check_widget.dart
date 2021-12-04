@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:front/model/wake_up_configuration.dart';
+import 'package:front/resource/globals.dart';
 
 class AgendaCheckWidget extends StatefulWidget {
-  ValueNotifier<WakeUpConfiguration> valueNotifier;
-  AgendaCheckWidget({Key? key, required this.valueNotifier}) : super(key: key);
+  const AgendaCheckWidget({Key? key}) : super(key: key);
 
   @override
   _AgendaCheckWidgetState createState() => _AgendaCheckWidgetState();
@@ -16,7 +16,7 @@ class _AgendaCheckWidgetState extends State<AgendaCheckWidget> {
       padding: const EdgeInsets.all(8.0),
       child: TextField(
         onChanged: (String value) {
-          widget.valueNotifier.value.homeWorkingConfig!.address = value;
+          config!.homeWorkingConfig!.address = value;
         },
         decoration: const InputDecoration(
           border: OutlineInputBorder(),

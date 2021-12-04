@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:front/model/wake_up_configuration.dart';
+import 'package:front/resource/globals.dart';
 
 class PositionWidget extends StatefulWidget {
-  ValueNotifier<WakeUpConfiguration> valueNotifier;
-  PositionWidget({Key? key, required this.valueNotifier}) : super(key: key);
+  const PositionWidget({Key? key}) : super(key: key);
 
   @override
   _PositionWidgetState createState() => _PositionWidgetState();
@@ -20,8 +20,7 @@ class _PositionWidgetState extends State<PositionWidget> {
           ),
           child: TextField(
               onChanged: (String value) {
-                widget.valueNotifier.value.homeWorkingConfig!.delay =
-                    int.parse(value);
+                config!.homeWorkingConfig!.delay = int.parse(value);
               },
               keyboardType: TextInputType.number,
               decoration: const InputDecoration(
@@ -33,8 +32,7 @@ class _PositionWidgetState extends State<PositionWidget> {
           padding: const EdgeInsets.all(8.0),
           child: TextField(
               onChanged: (String value) {
-                widget.valueNotifier.value.homeWorkingConfig!.delay =
-                    int.parse(value);
+                config!.homeWorkingConfig!.delay = int.parse(value);
               },
               keyboardType: TextInputType.number,
               decoration: const InputDecoration(

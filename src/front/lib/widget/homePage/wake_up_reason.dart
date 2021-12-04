@@ -31,7 +31,9 @@ class WakeUpReason extends StatelessWidget {
         reasonText,
         style: Theme.of(context).textTheme.headline5,
       ),
-      onPressed: reasonDescription != null ? () => {valueNotifier.value = reasonDescription!} : null,
+      onPressed: reasonDescription != null
+          ? () => {valueNotifier.value = reasonDescription!}
+          : null,
     ));
   }
 }

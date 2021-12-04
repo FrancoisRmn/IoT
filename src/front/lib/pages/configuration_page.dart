@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:front/data/api.dart';
 import 'package:front/model/wake_up_configuration.dart';
+import 'package:front/resource/globals.dart';
 import 'package:front/widget/appbar.dart';
 import 'package:front/widget/configurationPage/check_box_configuration.dart';
 import 'package:front/widget/configurationPage/home_working_widget.dart';
@@ -25,29 +26,21 @@ class _ConfigurationPageState extends State<ConfigurationPage> {
             if (snapshot.hasError) {
               return Text(snapshot.error.toString());
             } else {
-              WakeUpConfiguration wakeUpConfiguration = snapshot.data;
-              ValueNotifier<WakeUpConfiguration> config =
-                  ValueNotifier(wakeUpConfiguration);
-              return ValueListenableBuilder<WakeUpConfiguration>(
-                  valueListenable: config,
-                  builder: (context, value, child) {
-                    return Scaffold(
-                        appBar: Appbar(
-                          hasConfigurationAction: false,
-                          wakeUpConfiguration: wakeUpConfiguration,
-                        ),
-                        backgroundColor: Theme.of(context).backgroundColor,
-                        body: ListView(
-                          children: [
-                            CheckBoxConfiguration(
-                              title: "Do you prefer homeworking ?",
-                              valueNotifier: config,
-                            ),
-                            HomeWorking(valueNotifier: config),
-                            OfficeWorking(valueNotifier: config)
-                          ],
-                        ));
-                  });
+              config = snapshot.data;
+              return Scaffold(
+                  appBar: const Appbar(
+                    hasConfigurationAction: false,
+                  ),
+                  backgroundColor: Theme.of(context).backgroundColor,
+                  body: ListView(
+                    children: const [
+                      CheckBoxConfiguration(
+                        title: "Do you prefer homeworking ?",
+                      ),
+                      HomeWorking(),
+                      OfficeWorking()
+                    ],
+                  ));
             }
           } else {
             return const CircularProgressIndicator();

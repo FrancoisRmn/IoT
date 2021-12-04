@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:front/model/wake_up_configuration.dart';
+import 'package:front/resource/globals.dart';
 import 'package:front/resource/utils.dart';
 
 class WorkingWidget extends StatefulWidget {
-  ValueNotifier<WakeUpConfiguration> valueNotifier;
-  WorkingWidget({Key? key, required this.valueNotifier}) : super(key: key);
+  const WorkingWidget({Key? key}) : super(key: key);
 
   @override
   _WorkingWidgetState createState() => _WorkingWidgetState();
@@ -13,7 +13,7 @@ class WorkingWidget extends StatefulWidget {
 class _WorkingWidgetState extends State<WorkingWidget> {
   @override
   Widget build(BuildContext context) {
-    int? second = widget.valueNotifier.value.homeWorkingConfig!.shouldStartAt;
+    int? second = config!.homeWorkingConfig!.shouldStartAt;
     int hours = (second! / 3600).floor();
     second %= 3600;
     int minutes = (second / 60).floor();
@@ -27,7 +27,7 @@ class _WorkingWidgetState extends State<WorkingWidget> {
       if (newTime != null) {
         setState(() {
           _time = newTime;
-          widget.valueNotifier.value.homeWorkingConfig!.shouldStartAt =
+          config!.homeWorkingConfig!.shouldStartAt =
               newTime.hour * 3600 + newTime.minute * 60;
         });
       }
@@ -39,7 +39,7 @@ class _WorkingWidgetState extends State<WorkingWidget> {
           padding: const EdgeInsets.all(8.0),
           child: TextField(
             onChanged: (String value) {
-              widget.valueNotifier.value.homeWorkingConfig!.address = value;
+              config!.homeWorkingConfig!.address = value;
             },
             decoration: const InputDecoration(
               border: OutlineInputBorder(),
@@ -55,14 +55,13 @@ class _WorkingWidgetState extends State<WorkingWidget> {
           ),
         ),
         Text(
-          'Selected time: ${Utils.formatSeconds(widget.valueNotifier.value.homeWorkingConfig!.shouldStartAt!)}',
+          'Selected time: ${Utils.formatSeconds(config!.homeWorkingConfig!.shouldStartAt!)}',
         ),
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: TextField(
             onChanged: (String value) {
-              widget.valueNotifier.value.homeWorkingConfig!
-                  .preparationDuration = int.parse(value);
+              config!.homeWorkingConfig!.preparationDuration = int.parse(value);
             },
             keyboardType: TextInputType.number,
             decoration: const InputDecoration(
@@ -75,8 +74,7 @@ class _WorkingWidgetState extends State<WorkingWidget> {
           padding: const EdgeInsets.all(8.0),
           child: TextField(
               onChanged: (String value) {
-                widget.valueNotifier.value.homeWorkingConfig!.delay =
-                    int.parse(value);
+                config!.homeWorkingConfig!.delay = int.parse(value);
               },
               keyboardType: TextInputType.number,
               decoration: const InputDecoration(

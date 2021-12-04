@@ -6,8 +6,7 @@ import 'package:front/resource/constants.dart';
 import 'package:http/http.dart' as http;
 
 Future<WakeUpResponse> fetchWakeUpReason() async {
-  final response = await http
-      .get(Uri.parse(API_URL+ "wakeup"));
+  final response = await http.get(Uri.parse(API_URL + "wakeup"));
 
   if (response.statusCode == 200) {
     return WakeUpResponse.fromJson(jsonDecode(response.body));
@@ -17,8 +16,7 @@ Future<WakeUpResponse> fetchWakeUpReason() async {
 }
 
 Future<WakeUpConfiguration> fetchWakeUpConfiguration() async {
-  final response = await http
-      .get(Uri.parse(API_URL+ "wakeup/config"));
+  final response = await http.get(Uri.parse(API_URL + "wakeup/config"));
 
   if (response.statusCode == 200) {
     return WakeUpConfiguration.fromJson(jsonDecode(response.body));
