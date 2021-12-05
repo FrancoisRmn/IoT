@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:front/data/api.dart';
+import 'package:front/pages/configuration_page.dart';
 import 'package:front/resource/constants.dart';
-import 'package:front/resource/theme.dart';
+import 'package:front/resource/globals.dart';
 
 class Appbar extends StatefulWidget implements PreferredSizeWidget {
-  const Appbar({Key? key}) : super(key: key);
+  final bool hasConfigurationAction;
+  const Appbar({
+    Key? key,
+    required this.hasConfigurationAction,
+  }) : super(key: key);
 
   @override
   _AppbarState createState() => _AppbarState();
@@ -22,35 +28,50 @@ class _AppbarState extends State<Appbar> {
             textScaleFactor: 1.2,
             style: TextStyle(
                 fontFamily: 'Roboto-Black', fontWeight: FontWeight.bold)),
-        actions: <Widget>[
-          IconButton(
-            icon: const Icon(
-              Icons.settings,
-              color: Colors.white,
-            ),
-            onPressed: () {
-              Navigator.of(context).push(PageRouteBuilder(
-                  opaque: false,
-                  transitionDuration:
-                      const Duration(milliseconds: DURATION_ANIMATION),
-                  pageBuilder:
-                      (BuildContext context, animation, secondaryAnimation) {
-                    return Container(); //TODO Config reveil
+        actions: widget.hasConfigurationAction
+            ? <Widget>[
+                IconButton(
+                  icon: const Icon(
+                    Icons.settings,
+                    color: Colors.white,
+                  ),
+                  onPressed: () {
+                    Navigator.of(context).push(PageRouteBuilder(
+                        opaque: false,
+                        transitionDuration:
+                            const Duration(milliseconds: DURATION_ANIMATION),
+                        pageBuilder: (BuildContext context, animation,
+                            secondaryAnimation) {
+                          return const ConfigurationPage();
+                        },
+                        transitionsBuilder: (context,
+                            Animation<double> animation,
+                            secondaryAnimation,
+                            Widget child) {
+                          return FadeTransition(
+                              opacity: animation,
+                              child: SlideTransition(
+                                position: Tween<Offset>(
+                                        begin: Offset(0.0, 1.0),
+                                        end: Offset(0.0, 0.0))
+                                    .animate(animation),
+                                child: child,
+                              ));
+                        }));
                   },
-                  transitionsBuilder: (context, Animation<double> animation,
-                      secondaryAnimation, Widget child) {
-                    return FadeTransition(
-                        opacity: animation,
-                        child: SlideTransition(
-                          position: Tween<Offset>(
-                                  begin: Offset(0.0, 1.0),
-                                  end: Offset(0.0, 0.0))
-                              .animate(animation),
-                          child: child,
-                        ));
-                  }));
-            },
-          ),
-        ]);
+                ),
+              ]
+            : <Widget>[
+                IconButton(
+                  icon: const Icon(
+                    Icons.save,
+                    color: Colors.white,
+                  ),
+                  onPressed: () {
+                    postWakeUpConfiguration(config!);
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ]);
   }
 }

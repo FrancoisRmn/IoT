@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:front/data/api.dart';
 import 'package:front/model/wake_up_response.dart';
 import 'package:front/widget/appbar.dart';
-import 'package:front/widget/container_wake_up_reasons.dart';
-import 'package:front/widget/container_wake_up_time.dart';
+import 'package:front/widget/homePage/container_wake_up_reasons.dart';
+import 'package:front/widget/homePage/container_wake_up_time.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -17,7 +17,9 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const Appbar(),
+      appBar: Appbar(
+        hasConfigurationAction: true,
+      ),
       backgroundColor: Theme.of(context).backgroundColor,
       body: SafeArea(
         child: FutureBuilder(
@@ -30,8 +32,11 @@ class _HomePageState extends State<HomePage> {
                 WakeUpResponse wakeUpReason = snapshot.data;
                 return ListView(
                   children: [
-                    WakeUpTime("7:15"),
-                    WakeUpReasons(),
+                    WakeUpTime(
+                        wakeUpReason.time != null ? wakeUpReason.time! : ""),
+                    WakeUpReasons(
+                      wakeUpResponse: wakeUpReason,
+                    ),
                   ],
                 );
               }

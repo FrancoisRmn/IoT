@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:front/widget/decoration_wake_up_container.dart';
+import 'package:front/widget/homePage/decoration_wake_up_container.dart';
 
 class WakeUpTime extends StatefulWidget {
   final String wakeUpHour;
@@ -15,10 +15,11 @@ class _WakeUpTimeState extends State<WakeUpTime> {
     return Padding(
         padding: const EdgeInsets.all(8.0),
         child: Container(
-          decoration: WakeUpContainerDecoration().create(context),
+          decoration: WakeUpContainerDecoration()
+              .create(context, Theme.of(context).primaryColor),
           child: Center(
-              child:
-                  Text(widget.wakeUpHour, style: Theme.of(context).textTheme.headline1)),
+              child: Text(widget.wakeUpHour,
+                  style: Theme.of(context).textTheme.headline1)),
         ));
   }
 }
