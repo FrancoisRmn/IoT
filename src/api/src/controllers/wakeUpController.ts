@@ -64,7 +64,6 @@ class WakeUpController {
                 const currentOfficeWeather = await weatherDataAccess.getWeatherHourly(config.officeWorkingConfig.position.lat, config.officeWorkingConfig.position.lon)
                 const indexOffice = nearest(currentOfficeWeather.map(c => c.time), new Date(config.officeWorkingConfig.shouldStartAt))
                 const nearestOfficeWeather = currentOfficeWeather[indexOffice]
-                console.log(nearestOfficeWeather)
                 if ((nearestOfficeWeather.temp < config.officeWorkingConfig.weatherCheck?.minTemp) || (nearestOfficeWeather.temp > config.officeWorkingConfig.weatherCheck?.maxTemp)) {
                     const wuTimeHome = this.calcWakeUpTimeHomeWorking(config.homeWorkingConfig)
                     return new WakeUpModel(wuTimeHome, new WeatherTemperatureWakeUpReason(config.officeWorkingConfig, config.officeWorkingConfig.weatherCheck, nearestOfficeWeather))
@@ -112,7 +111,7 @@ class WakeUpController {
         }
 
         const directionModel = await directionDataAccess.getDirection(
-            config.officeWorkingConfig.shouldStartAt,
+            moment().startOf('day').add(config.officeWorkingConfig.shouldStartAt,'seconds').toDate(),
             config.homeWorkingConfig.position.lat,
             config.homeWorkingConfig.position.lon,
             config.officeWorkingConfig.position.lat,

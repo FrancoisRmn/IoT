@@ -1,4 +1,6 @@
+import { WeatherConditionType } from "./WeatherConditionType";
+
 export interface WeatherCondition{
-    type: string
+    type: WeatherConditionType
     intensity: number
 }
