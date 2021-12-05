@@ -14,11 +14,17 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+
+  refresh() {
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: Appbar(
         hasConfigurationAction: true,
+          notifyParent: refresh,
       ),
       backgroundColor: Theme.of(context).backgroundColor,
       body: SafeArea(

@@ -35,7 +35,8 @@ class _WorkingWidgetState extends State<WorkingWidget> {
         setState(() {
           _time = newTime;
           widget.isHomeWorking
-              ? config!.homeWorkingConfig!.shouldStartAt
+              ? config!.homeWorkingConfig!.shouldStartAt =
+                  newTime.hour * 3600 + newTime.minute * 60
               : config!.officeWorkingConfig!.shouldStartAt =
                   newTime.hour * 3600 + newTime.minute * 60;
         });

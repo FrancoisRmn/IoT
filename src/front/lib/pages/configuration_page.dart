@@ -22,25 +22,23 @@ class _ConfigurationPageState extends State<ConfigurationPage> {
         future: fetchWakeUpConfiguration(),
         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
-            if (snapshot.hasError) {
-              return Text(snapshot.error.toString());
-            } else {
-              config = snapshot.data;
-              return Scaffold(
-                  appBar: const Appbar(
-                    hasConfigurationAction: false,
-                  ),
-                  backgroundColor: Theme.of(context).backgroundColor,
-                  body: ListView(
-                    children: const [
-                      CheckBoxConfiguration(
-                        title: "Do you prefer homeworking ?",
-                      ),
-                      HomeWorking(),
-                      OfficeWorking()
-                    ],
-                  ));
-            }
+            config = snapshot.data;
+            print(config.toString());
+            return Scaffold(
+                appBar: const Appbar(
+                  hasConfigurationAction: false,
+                  notifyParent: null,
+                ),
+                backgroundColor: Theme.of(context).backgroundColor,
+                body: ListView(
+                  children: const [
+                    CheckBoxConfiguration(
+                      title: "Do you prefer homeworking ?",
+                    ),
+                    HomeWorking(),
+                    OfficeWorking()
+                  ],
+                ));
           } else {
             return const CircularProgressIndicator();
           }
