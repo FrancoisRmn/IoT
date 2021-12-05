@@ -5,7 +5,11 @@ class Utils {
     int hours = (second / 3600).floor();
     second %= 3600;
     int minutes = (second / 60).floor();
-    return hours.toString() + ":" + minutes.toString();
+    if (minutes < 10) {
+      return hours.toString() + ":0" + minutes.toString();
+    } else {
+      return hours.toString() + ":" + minutes.toString();
+    }
   }
 
   static RoutingProfile? selectRouting(String mode) {

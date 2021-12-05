@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:front/model/wake_up_configuration.dart';
 import 'package:front/resource/globals.dart';
 
 class AirPollutionCheckWidget extends StatefulWidget {
@@ -16,6 +15,11 @@ class _AirPollutionCheckWidgetState extends State<AirPollutionCheckWidget> {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: TextField(
+        controller: TextEditingController(
+            text: config!.officeWorkingConfig!.airPollutionCheck != null
+                ? config!.officeWorkingConfig!.airPollutionCheck!.minAqi
+                    .toString()
+                : ""),
         onChanged: (String value) {
           config!.officeWorkingConfig!.airPollutionCheck!.minAqi =
               int.parse(value);

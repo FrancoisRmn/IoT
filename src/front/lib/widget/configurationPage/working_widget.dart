@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:front/model/wake_up_configuration.dart';
 import 'package:front/resource/globals.dart';
 import 'package:front/resource/utils.dart';
+import 'package:front/widget/configurationPage/position_widget.dart';
 
 class WorkingWidget extends StatefulWidget {
   bool isHomeWorking = true;
@@ -21,6 +21,10 @@ class _WorkingWidgetState extends State<WorkingWidget> {
     second %= 3600;
     int minutes = (second / 60).floor();
     TimeOfDay _time = TimeOfDay(hour: hours, minute: minutes);
+
+    int? delay = widget.isHomeWorking
+        ? config!.homeWorkingConfig!.delay
+        : config!.officeWorkingConfig!.delay;
 
     void _selectTime() async {
       final TimeOfDay? newTime = await showTimePicker(
@@ -43,10 +47,15 @@ class _WorkingWidgetState extends State<WorkingWidget> {
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: TextField(
+            controller: TextEditingController(
+                text: widget.isHomeWorking
+                    ? config!.homeWorkingConfig!.address
+                    : config!.officeWorkingConfig!.address),
             onChanged: (String value) {
               widget.isHomeWorking
-                  ? config!.homeWorkingConfig!.address
+                  ? config!.homeWorkingConfig!.address = value
                   : config!.officeWorkingConfig!.address = value;
+              print(config!.toJson());
             },
             decoration: const InputDecoration(
               border: OutlineInputBorder(),
@@ -67,9 +76,15 @@ class _WorkingWidgetState extends State<WorkingWidget> {
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: TextField(
+            controller: TextEditingController(
+                text: widget.isHomeWorking
+                    ? config!.homeWorkingConfig!.preparationDuration.toString()
+                    : config!.officeWorkingConfig!.preparationDuration
+                        .toString()),
             onChanged: (String value) {
               widget.isHomeWorking
-                  ? config!.homeWorkingConfig!.preparationDuration
+                  ? config!.homeWorkingConfig!.preparationDuration =
+                      int.parse(value)
                   : config!.officeWorkingConfig!.preparationDuration =
                       int.parse(value);
             },
@@ -83,9 +98,11 @@ class _WorkingWidgetState extends State<WorkingWidget> {
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: TextField(
+              controller: TextEditingController(
+                  text: delay != null ? delay.toString() : ""),
               onChanged: (String value) {
                 widget.isHomeWorking
-                    ? config!.homeWorkingConfig!.delay
+                    ? config!.homeWorkingConfig!.delay = int.parse(value)
                     : config!.officeWorkingConfig!.delay = int.parse(value);
               },
               keyboardType: TextInputType.number,
@@ -93,6 +110,9 @@ class _WorkingWidgetState extends State<WorkingWidget> {
                 border: OutlineInputBorder(),
                 labelText: 'Delay',
               )),
+        ),
+        PositionWidget(
+          isHomeWorking: widget.isHomeWorking,
         ),
       ],
     );

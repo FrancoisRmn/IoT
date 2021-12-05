@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:front/data/api.dart';
-import 'package:front/model/wake_up_configuration.dart';
 import 'package:front/pages/configuration_page.dart';
 import 'package:front/resource/constants.dart';
 import 'package:front/resource/globals.dart';
@@ -70,6 +69,7 @@ class _AppbarState extends State<Appbar> {
                   ),
                   onPressed: () {
                     postWakeUpConfiguration(config!);
+                    Navigator.of(context).pop();
                   },
                 ),
               ]);

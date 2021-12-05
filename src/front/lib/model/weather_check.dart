@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:front/model/weather_condition.dart';
 
 class WeatherCheck {

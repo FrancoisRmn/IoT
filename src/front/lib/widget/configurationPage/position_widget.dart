@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:front/model/wake_up_configuration.dart';
 import 'package:front/resource/globals.dart';
 import 'package:front/widget/homePage/decoration_wake_up_container.dart';
 
 class PositionWidget extends StatefulWidget {
-  const PositionWidget({Key? key}) : super(key: key);
+  bool isHomeWorking = true;
+  PositionWidget({Key? key, required this.isHomeWorking}) : super(key: key);
 
   @override
   _PositionWidgetState createState() => _PositionWidgetState();
@@ -27,8 +27,17 @@ class _PositionWidgetState extends State<PositionWidget> {
               8,
             ),
             child: TextField(
+                controller: TextEditingController(
+                    text: widget.isHomeWorking
+                        ? config!.homeWorkingConfig!.position!.lat.toString()
+                        : config!.officeWorkingConfig!.position!.lat
+                            .toString()),
                 onChanged: (String value) {
-                  config!.homeWorkingConfig!.delay = int.parse(value);
+                  widget.isHomeWorking
+                      ? config!.homeWorkingConfig!.position!.lat =
+                          double.parse(value)
+                      : config!.officeWorkingConfig!.position!.lat =
+                          double.parse(value);
                 },
                 keyboardType: TextInputType.number,
                 decoration: const InputDecoration(
@@ -39,8 +48,17 @@ class _PositionWidgetState extends State<PositionWidget> {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: TextField(
+                controller: TextEditingController(
+                    text: widget.isHomeWorking
+                        ? config!.homeWorkingConfig!.position!.lon.toString()
+                        : config!.officeWorkingConfig!.position!.lon
+                            .toString()),
                 onChanged: (String value) {
-                  config!.homeWorkingConfig!.delay = int.parse(value);
+                  widget.isHomeWorking
+                      ? config!.homeWorkingConfig!.position!.lon =
+                          double.parse(value)
+                      : config!.officeWorkingConfig!.position!.lon =
+                          double.parse(value);
                 },
                 keyboardType: TextInputType.number,
                 decoration: const InputDecoration(

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:front/model/wake_up_configuration.dart';
 import 'package:front/resource/globals.dart';
 import 'package:front/resource/utils.dart';
 

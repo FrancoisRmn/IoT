@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:front/model/wake_up_configuration.dart';
 import 'package:front/resource/globals.dart';
 
 class WeatherCheckWidget extends StatefulWidget {
@@ -17,6 +16,11 @@ class _WeatherCheckWidgetState extends State<WeatherCheckWidget> {
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: TextField(
+            controller: TextEditingController(
+                text: config!.officeWorkingConfig!.weatherCheck != null
+                    ? config!.officeWorkingConfig!.weatherCheck!.minTemp
+                        .toString()
+                    : ""),
             onChanged: (String value) {
               config!.officeWorkingConfig!.weatherCheck!.minTemp =
                   double.parse(value);
@@ -31,6 +35,11 @@ class _WeatherCheckWidgetState extends State<WeatherCheckWidget> {
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: TextField(
+            controller: TextEditingController(
+                text: config!.officeWorkingConfig!.weatherCheck != null
+                    ? config!.officeWorkingConfig!.weatherCheck!.maxTemp
+                        .toString()
+                    : ""),
             onChanged: (String value) {
               config!.officeWorkingConfig!.weatherCheck!.maxTemp =
                   double.parse(value);

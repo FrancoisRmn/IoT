@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:flutter/material.dart';
 import 'package:front/model/wake_up_configuration.dart';
 import 'package:front/model/wake_up_response.dart';
 import 'package:front/resource/constants.dart';
@@ -26,13 +25,14 @@ Future<WakeUpConfiguration> fetchWakeUpConfiguration() async {
   }
 }
 
-void postWakeUpConfiguration(WakeUpConfiguration wakeUpConfiguration) async {
+Future<WakeUpConfiguration> postWakeUpConfiguration(
+    WakeUpConfiguration wakeUpConfiguration) async {
   final response = await http.post(Uri.parse(API_URL + "wakeup/config"),
       headers: {"Content-Type": "application/json"},
       body: json.encode(wakeUpConfiguration.toJson()));
   print(wakeUpConfiguration.toJson());
   if (response.statusCode == 201) {
-    print(response.body); //TODO return wakeupconfig
+    return WakeUpConfiguration.fromJson(jsonDecode(response.body));
   } else {
     throw Exception('Failed to post WakeUpResponse');
   }

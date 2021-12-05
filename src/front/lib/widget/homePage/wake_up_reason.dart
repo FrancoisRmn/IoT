@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:front/resource/theme.dart';
 
 class WakeUpReason extends StatelessWidget {
   final String reasonText;

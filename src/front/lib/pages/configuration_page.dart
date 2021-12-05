@@ -1,7 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:front/data/api.dart';
-import 'package:front/model/wake_up_configuration.dart';
 import 'package:front/resource/globals.dart';
 import 'package:front/widget/appbar.dart';
 import 'package:front/widget/configurationPage/check_box_configuration.dart';

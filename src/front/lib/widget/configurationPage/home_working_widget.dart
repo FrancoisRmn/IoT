@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:front/model/wake_up_configuration.dart';
 import 'package:front/widget/configurationPage/agenda_check_widget.dart';
-import 'package:front/widget/configurationPage/position_widget.dart';
 import 'package:front/widget/configurationPage/working_widget.dart';
 import 'package:front/widget/homePage/decoration_wake_up_container.dart';
 
@@ -29,7 +27,6 @@ class _HomeWorkingState extends State<HomeWorking> {
             WorkingWidget(
               isHomeWorking: true,
             ),
-            const PositionWidget(),
             const AgendaCheckWidget()
           ],
         ),
