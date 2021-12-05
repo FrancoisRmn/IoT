@@ -2,5 +2,5 @@ import { DataSource } from "../DataSource";
 
 export interface DirectionModel extends DataSource{
     departureTime: number,
-    summary: string
+    instructions: string
 }

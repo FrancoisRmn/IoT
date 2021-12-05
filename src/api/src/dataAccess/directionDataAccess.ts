@@ -1,4 +1,5 @@
 import { TransitMode, TravelMode } from "@googlemaps/google-maps-services-js";
+import moment from "moment";
 import { mapsClient } from "../middlewares/mapsClient";
 import { DirectionModel } from "../models/direction/DirectionModel";
 import { RoutingProfile } from "../models/direction/RoutingProfile"
@@ -8,7 +9,7 @@ require('dotenv').config();
 class DirectionDataAccess{
 
     public async getDirection(
-        arrivalTime: number,
+        arrivalTime: Date,
         latOrigin:number,
         lonOrigin:number,
         latDest:number,
@@ -32,9 +33,16 @@ class DirectionDataAccess{
                 }
             })).data
             
+
+            let ins = "\n"
+            data.routes[0].legs[0].steps.forEach(s => {
+                ins += s.html_instructions.replace(/<[^>]+>/g, ' ');
+                ins += "\n"
+            })
+
             return {
-                departureTime: arrivalTime - (data.routes[0].legs[0].duration.value),
-                summary: data.routes[0].summary
+                departureTime: moment(arrivalTime).subtract(data.routes[0].legs[0].duration.value,'seconds').unix(),
+                instructions: ins
             }
 
         }catch(err){
