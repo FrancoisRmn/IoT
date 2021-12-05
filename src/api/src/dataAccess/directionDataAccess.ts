@@ -41,7 +41,7 @@ class DirectionDataAccess{
             })
 
             return {
-                departureTime: moment(arrivalTime).subtract(data.routes[0].legs[0].duration.value,'seconds').unix(),
+                departureTime: (arrivalTime.valueOf() / 1000) - data.routes[0].legs[0].duration.value - moment(arrivalTime).startOf('day').unix(),
                 instructions: ins
             }
 
