@@ -25,3 +25,9 @@ if __name__ == "__main__":
     t1 = Thread(target = displayHour)
     t1.setDaemon(True)
     t1.start()
+
+    try:
+        while True:
+            time.sleep(1)
+    except KeyboardInterrupt:
+        exit(1)
