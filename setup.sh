@@ -17,4 +17,4 @@ echo Exec=/usr/bin/python3 /home/pi/IoT/src/raspberry/api.py | sudo tee -a /etc/
 echo [Desktop Entry] | sudo tee /etc/xdg/autostart/scala.desktop
 echo Type=Application | sudo tee -a /etc/xdg/autostart/scala.desktop
 echo Name=Backend | sudo tee -a /etc/xdg/autostart/scala.desktop
-echo Exec=cd /home/pi/IoT/src/reveil-scala/start.sh | sudo tee -a /etc/xdg/autostart/scala.desktop
+echo Exec=/home/pi/IoT/src/reveil-scala/start.sh | sudo tee -a /etc/xdg/autostart/scala.desktop
