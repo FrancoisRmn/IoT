@@ -10,7 +10,7 @@ class AirPollutionCheck {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     if (minAqi != null) {
-      data['minAqi'] = minAqi as String;
+      data['minAqi'] = minAqi;
     }
     return data;
   }
