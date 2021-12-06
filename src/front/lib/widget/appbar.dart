@@ -6,9 +6,11 @@ import 'package:front/resource/globals.dart';
 
 class Appbar extends StatefulWidget implements PreferredSizeWidget {
   final bool hasConfigurationAction;
+  final Function()? notifyParent;
   const Appbar({
     Key? key,
     required this.hasConfigurationAction,
+    required this.notifyParent
   }) : super(key: key);
 
   @override
@@ -57,7 +59,7 @@ class _AppbarState extends State<Appbar> {
                                     .animate(animation),
                                 child: child,
                               ));
-                        }));
+                        })).then((_) => widget.notifyParent!());
                   },
                 ),
               ]

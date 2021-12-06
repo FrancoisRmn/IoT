@@ -12,8 +12,8 @@ class WeatherCheck {
 
   factory WeatherCheck.fromJson(Map<String, dynamic> json) {
     return WeatherCheck(
-        maxTemp: json['maxTemp'],
-        minTemp: json['minTemp'],
+        maxTemp: (json['maxTemp']).toDouble(),
+        minTemp: (json['minTemp']).toDouble(),
         weatherConditionsCheck: json['weatherConditionsCheck'] != null
             ? WeatherCondition.fromJson(json['weatherConditionsCheck'])
             : null);
@@ -22,10 +22,10 @@ class WeatherCheck {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     if (minTemp != null) {
-      data['minTemp'] = minTemp! as String;
+      data['minTemp'] = minTemp!;
     }
     if (maxTemp != null) {
-      data['maxTemp'] = maxTemp! as String;
+      data['maxTemp'] = maxTemp!;
     }
     if (weatherConditionsCheck != null) {
       data['weatherConditionsCheck'] = weatherConditionsCheck!.toJson();

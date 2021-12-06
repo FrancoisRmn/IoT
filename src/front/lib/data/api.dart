@@ -30,7 +30,6 @@ Future<WakeUpConfiguration> postWakeUpConfiguration(
   final response = await http.post(Uri.parse(API_URL + "wakeup/config"),
       headers: {"Content-Type": "application/json"},
       body: json.encode(wakeUpConfiguration.toJson()));
-  print(wakeUpConfiguration.toJson());
   if (response.statusCode == 201) {
     return WakeUpConfiguration.fromJson(jsonDecode(response.body));
   } else {
