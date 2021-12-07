@@ -46,7 +46,7 @@ class WakeUpController {
                     moment().startOf('day').isSame(moment(e.startDate).startOf('day'))
                 )
                 if (eventFound) {
-                    return new WakeUpModel(wuTimeOffice, new AgendaWakeUpReason(config.homeWorkingConfig, config.homeWorkingConfig.agendaCheck, eventFound))
+                    return new WakeUpModel(wuTimeOffice, new AgendaWakeUpReason(config.homeWorkingConfig, config.homeWorkingConfig.agendaCheck, eventFound,direction))
                 }
             }
             const wuTimeHome = this.calcWakeUpTimeHomeWorking(config.homeWorkingConfig)
