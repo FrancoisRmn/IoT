@@ -42,7 +42,7 @@ class WakeUpController {
             if (config.homeWorkingConfig.agendaCheck) {
                 const events = await agendaDataAccess.getEvents(new URL(config.homeWorkingConfig.agendaCheck.url));
                 const eventFound = events.find(e =>
-                    e.location === config.officeWorkingConfig.address &&
+                    //e.location === config.officeWorkingConfig.address &&
                     moment().startOf('day').isSame(moment(e.startDate).startOf('day'))
                 )
                 if (eventFound) {
