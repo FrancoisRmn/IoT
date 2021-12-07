@@ -66,7 +66,7 @@ class WakeUpController {
                     return new WakeUpModel(wuTimeHome, new AirPollutionWakeUpReason(config.officeWorkingConfig, config.officeWorkingConfig.airPollutionCheck, nearestAirPollution))
                 }
                 const currentHomeAirPollution = await airPollutionDataAccess.getHomeAirPollution()
-                if (currentHomeAirPollution.aqi < config.officeWorkingConfig.airPollutionCheck.minAqi) {
+                if (currentHomeAirPollution.aqi > config.officeWorkingConfig.airPollutionCheck.minAqi) {
                     const wuTimeHome = this.calcWakeUpTimeHomeWorking(config.homeWorkingConfig)
                     return new WakeUpModel(wuTimeHome, new AirPollutionWakeUpReason(config.officeWorkingConfig, config.officeWorkingConfig.airPollutionCheck, currentHomeAirPollution))
                 }
