@@ -1,7 +1,7 @@
 import moment from "moment"
 
 export function formatDate(date: Date): string{
-    return moment(date).format("h:mm:ss a")
+    return date.toLocaleDateString()
 }
 
 export function formatTime(time: number): string{

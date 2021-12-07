@@ -1,10 +1,11 @@
 import { WakeUpReason } from "./WakeUpReason";
 import { WakeUpReasonCategory } from "./WakeUpReasonCategory";
+import { secondsToMinutes } from "../../utils/dateUtils";
 
 export class PreferHomeWorkingWakeUpReason extends WakeUpReason{
 
     public get reasonText():string{
-        return `You prefer working from home today. You have ${this.config.preparationDuration} to get ready.`
+        return `You prefer working from home today. You have ${secondsToMinutes(this.config.preparationDuration)} to get ready.`
     }
 
     public get homeWorking():boolean{
