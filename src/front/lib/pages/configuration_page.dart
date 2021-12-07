@@ -29,7 +29,7 @@ class _ConfigurationPageState extends State<ConfigurationPage> {
                   hasConfigurationAction: false,
                   notifyParent: null,
                 ),
-                backgroundColor: Theme.of(context).backgroundColor,
+                backgroundColor: Colors.white,
                 body: ListView(
                   children: const [
                     CheckBoxConfiguration(
